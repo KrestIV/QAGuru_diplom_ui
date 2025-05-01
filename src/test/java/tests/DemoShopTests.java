@@ -1,8 +1,12 @@
 package tests;
 
+import com.codeborne.selenide.Selenide;
 import models.*;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Cookie;
 
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 
@@ -62,7 +66,16 @@ public class DemoShopTests {
                 .statusCode(201);
 
         //delete item from cart by UI
+        open("https://demoqa.com/images/Toolsqa.jpg");
+        getWebDriver().manage().addCookie(new Cookie("token",userToken));
+        getWebDriver().manage().addCookie(new Cookie("userID",loginResponse.getUserId()));
+        getWebDriver().manage().addCookie(new Cookie("expires",loginResponse.getExpires()));
+        open("https://demoqa.com/profile");
+        $("#delete-record-undefined").click();
+        $("#closeSmallModal-ok").click();
 
+        //Selenide.confirm();
+        Selenide.dismiss();
 
         //check for result
         ProfileResponseModel profileResponse =
