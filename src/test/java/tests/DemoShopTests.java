@@ -7,8 +7,11 @@ import org.openqa.selenium.Cookie;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
+import static specs.LoginSpec.loginSpecRequest;
+import static specs.LoginSpec.loginSpecResponse;
 
 
 public class DemoShopTests {
@@ -20,16 +23,18 @@ public class DemoShopTests {
         authData.setUserName("krestsovTestUser");
         authData.setPassword("tNj8VqCg!DU8UpN");
 
-        LoginResponseModel loginResponse = given()
-                .log().all()
-                .contentType(JSON)
-                .when()
-                .body(authData)
-                .post("https://demoqa.com/Account/v1/Login")
-                .then()
-                .log().all()
-                .statusCode(200)
-                .extract().as(LoginResponseModel.class);
+        //GenerateTokenModel generateTokenResponse = ;
+
+        LoginResponseModel loginResponse =
+                step("Login user", ()->
+                        given(loginSpecRequest)
+                                .body(authData)
+                                .when()
+                                .post("https://demoqa.com/Account/v1/login")
+                                .then()
+                                .spec(loginSpecResponse)
+                                .extract().as(LoginResponseModel.class));
+
         String userToken = loginResponse.getToken();
 
         //empty library
