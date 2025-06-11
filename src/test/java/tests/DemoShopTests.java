@@ -9,24 +9,33 @@ import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
+import static specs.EmptyLibrarySpec.emptyLibrarySpecRequest;
+import static specs.EmptyLibrarySpec.emptyLibrarySpecResponse;
 import static specs.LoginSpec.loginSpecRequest;
 import static specs.LoginSpec.loginSpecResponse;
+import static specs.AddBooksSpec.addBooksSpecRequest;
+import static specs.AddBooksSpec.addBooksSpecResponse;
 
 
 public class DemoShopTests {
 
     @Test
-    public void deleteItemFromCartTest (){
-        //login
+    public void deleteItemFromCartTest() {
+
         LoginCorrectBodyModel authData = new LoginCorrectBodyModel();
         authData.setUserName("krestsovTestUser");
         authData.setPassword("tNj8VqCg!DU8UpN");
+        step("Generate login token", () ->
+                given(loginSpecRequest)
+                        .body(authData)
+                        .when()
+                        .post("https://demoqa.com/Account/v1/GenerateToken")
+                        .then()
+                        .spec(loginSpecResponse));
 
-        //GenerateTokenModel generateTokenResponse = ;
 
         LoginResponseModel loginResponse =
-                step("Login user", ()->
+                step("Login user", () ->
                         given(loginSpecRequest)
                                 .body(authData)
                                 .when()
@@ -34,19 +43,16 @@ public class DemoShopTests {
                                 .then()
                                 .spec(loginSpecResponse)
                                 .extract().as(LoginResponseModel.class));
-
         String userToken = loginResponse.getToken();
 
-        //empty library
 
-        given()
-                        .header("authorization","Bearer " + userToken)
-                        .log().all()
+        step("empty library", () ->
+                given(emptyLibrarySpecRequest)
+                        .header("authorization", "Bearer " + userToken)
                         .when()
                         .delete("https://demoqa.com/BookStore/v1/Books?UserId=" + loginResponse.getUserId())
                         .then()
-                        .log().all()
-                        .statusCode(204);
+                        .spec(emptyLibrarySpecResponse));
 
         //add Items to cart
 
@@ -59,33 +65,29 @@ public class DemoShopTests {
 
         buyBooks.setCollectionOfIsbns(booksToBuy);
 
-        given()
-                .log().all()
-                .header("authorization","Bearer " + userToken)
-                .contentType(JSON)
+        given(addBooksSpecRequest)
+                .header("authorization", "Bearer " + userToken)
                 .when()
                 .body(buyBooks)
                 .post("https://demoqa.com/BookStore/v1/Books")
                 .then()
-                .log().all()
-                .statusCode(201);
+                .spec(addBooksSpecResponse);
 
         //delete item from cart by UI
         open("https://demoqa.com/images/Toolsqa.jpg");
-        getWebDriver().manage().addCookie(new Cookie("token",userToken));
-        getWebDriver().manage().addCookie(new Cookie("userID",loginResponse.getUserId()));
-        getWebDriver().manage().addCookie(new Cookie("expires",loginResponse.getExpires()));
+        getWebDriver().manage().addCookie(new Cookie("token", userToken));
+        getWebDriver().manage().addCookie(new Cookie("userID", loginResponse.getUserId()));
+        getWebDriver().manage().addCookie(new Cookie("expires", loginResponse.getExpires()));
         open("https://demoqa.com/profile");
         $("#delete-record-undefined").click();
         $("#closeSmallModal-ok").click();
 
-        //Selenide.confirm();
         Selenide.dismiss();
 
         //check for result
         ProfileResponseModel profileResponse =
                 given()
-                        .header("authorization","Bearer " + userToken)
+                        .header("authorization", "Bearer " + userToken)
                         .log().all()
                         .when()
                         .get("https://demoqa.com/Account/v1/User/" + loginResponse.getUserId())
