@@ -25,7 +25,7 @@ public class DemoShopTests {
     @Test
     public void deleteItemFromCartTest() {
 
-        LoginCorrectBodyModel authData = new LoginCorrectBodyModel();
+        LoginBodyModel authData = new LoginBodyModel();
         authData.setUserName("krestsovTestUser");
         authData.setPassword("tNj8VqCg!DU8UpN");
         step("Генерация авторизационного токена пользователя", () ->
@@ -57,7 +57,7 @@ public class DemoShopTests {
                         .then()
                         .spec(emptyLibrarySpecResponse));
 
-        //add Items to cart
+
         step("Добавление книги в библиотеку пользователя", () -> {
             AddingBooksToProfileModel buyBooks = new AddingBooksToProfileModel();
             buyBooks.setUserId(loginResponse.getUserId());
@@ -77,21 +77,21 @@ public class DemoShopTests {
                     .spec(addBooksSpecResponse);
         });
 
-        //delete item from cart by UI
+
         step("Вход на портал через UI",() ->{
-        open("https://demoqa.com/images/Toolsqa.jpg");
-        getWebDriver().manage().addCookie(new Cookie("token", userToken));
-        getWebDriver().manage().addCookie(new Cookie("userID", loginResponse.getUserId()));
-        getWebDriver().manage().addCookie(new Cookie("expires", loginResponse.getExpires()));
-        open("https://demoqa.com/profile");});
+            open("https://demoqa.com/images/Toolsqa.jpg");
+            getWebDriver().manage().addCookie(new Cookie("token", userToken));
+            getWebDriver().manage().addCookie(new Cookie("userID", loginResponse.getUserId()));
+            getWebDriver().manage().addCookie(new Cookie("expires", loginResponse.getExpires()));
+            open("https://demoqa.com/profile");});
 
         step("Удаление книги из профиля пользователя", ()->{
-        $("#delete-record-undefined").click();
-        $("#closeSmallModal-ok").click();
+            $("#delete-record-undefined").click();
+            $("#closeSmallModal-ok").click();
 
         Selenide.dismiss();});
 
-        //check for result
+
         step("Проверка удаления книги из библиотеки пользователя", () ->
         {
             ProfileResponseModel profileResponse =
