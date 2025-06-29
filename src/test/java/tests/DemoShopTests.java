@@ -32,7 +32,7 @@ public class DemoShopTests {
                 given(loginSpecRequest)
                         .body(authData)
                         .when()
-                        .post("https://demoqa.com/Account/v1/GenerateToken")
+                        .post("/Account/v1/GenerateToken")
                         .then()
                         .spec(loginSpecResponse));
 
@@ -42,7 +42,7 @@ public class DemoShopTests {
                         given(loginSpecRequest)
                                 .body(authData)
                                 .when()
-                                .post("https://demoqa.com/Account/v1/login")
+                                .post("/Account/v1/login")
                                 .then()
                                 .spec(loginSpecResponse)
                                 .extract().as(LoginResponseModel.class));
@@ -53,7 +53,7 @@ public class DemoShopTests {
                 given(emptyLibrarySpecRequest)
                         .header("authorization", "Bearer " + userToken)
                         .when()
-                        .delete("https://demoqa.com/BookStore/v1/Books?UserId=" + loginResponse.getUserId())
+                        .delete("/BookStore/v1/Books?UserId=" + loginResponse.getUserId())
                         .then()
                         .spec(emptyLibrarySpecResponse));
 
@@ -72,18 +72,18 @@ public class DemoShopTests {
                     .header("authorization", "Bearer " + userToken)
                     .when()
                     .body(buyBooks)
-                    .post("https://demoqa.com/BookStore/v1/Books")
+                    .post("/BookStore/v1/Books")
                     .then()
                     .spec(addBooksSpecResponse);
         });
 
 
         step("Вход на портал через UI",() ->{
-            open("https://demoqa.com/images/Toolsqa.jpg");
+            open("/images/Toolsqa.jpg");
             getWebDriver().manage().addCookie(new Cookie("token", userToken));
             getWebDriver().manage().addCookie(new Cookie("userID", loginResponse.getUserId()));
             getWebDriver().manage().addCookie(new Cookie("expires", loginResponse.getExpires()));
-            open("https://demoqa.com/profile");});
+            open("/profile");});
 
         step("Удаление книги из профиля пользователя", ()->{
             $("#delete-record-undefined").click();
@@ -98,7 +98,7 @@ public class DemoShopTests {
                     given(profileSpecRequest)
                             .header("authorization", "Bearer " + userToken)
                             .when()
-                            .get("https://demoqa.com/Account/v1/User/" + loginResponse.getUserId())
+                            .get("/Account/v1/User/" + loginResponse.getUserId())
                             .then()
                             .spec(profileSpecResponse)
                             .extract().as(ProfileResponseModel.class);

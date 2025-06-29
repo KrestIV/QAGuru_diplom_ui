@@ -32,6 +32,7 @@ dependencies {
             "io.rest-assured:rest-assured:$restAssuredVersion",
             "io.rest-assured:json-schema-validator:$restAssuredVersion",
             "io.qameta.allure:allure-rest-assured:$allureVersion",
+            'io.qameta.allure:allure-selenide:2.19.0',
             "org.junit.jupiter:junit-jupiter:5.10.0",
             "org.assertj:assertj-core:3.27.3",
             'org.slf4j:slf4j-simple:2.0.7'
