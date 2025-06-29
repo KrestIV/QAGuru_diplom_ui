@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static specs.ProfileSpec.profileSpecRequest;
 import static specs.ProfileSpec.profileSpecResponse;
 
-public class DemoShopTests {
+public class DemoShopTests extends TestBase {
 
     @Test
     public void deleteItemFromCartTest() {
