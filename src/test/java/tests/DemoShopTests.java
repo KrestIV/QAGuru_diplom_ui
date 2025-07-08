@@ -25,12 +25,9 @@ public class DemoShopTests extends TestBase {
     @Test
     public void deleteItemFromCartTest() {
 
-        LoginBodyModel authData = new LoginBodyModel();
-        authData.setUserName("krestsovTestUser");
-        authData.setPassword("tNj8VqCg!DU8UpN");
         step("Генерация авторизационного токена пользователя", () ->
                 given(loginSpecRequest)
-                        .body(authData)
+                        .body(getAuthData())
                         .when()
                         .post("/Account/v1/GenerateToken")
                         .then()
@@ -40,7 +37,7 @@ public class DemoShopTests extends TestBase {
         LoginResponseModel loginResponse =
                 step("Авторизация пользователя на портале", () ->
                         given(loginSpecRequest)
-                                .body(authData)
+                                .body(getAuthData())
                                 .when()
                                 .post("/Account/v1/login")
                                 .then()
@@ -59,14 +56,8 @@ public class DemoShopTests extends TestBase {
 
 
         step("Добавление книги в библиотеку пользователя", () -> {
-            AddingBooksToProfileModel buyBooks = new AddingBooksToProfileModel();
-            buyBooks.setUserId(loginResponse.getUserId());
-
-            BookIsbnModel[] booksToBuy = new BookIsbnModel[1];
-            booksToBuy[0] = new BookIsbnModel();
-            booksToBuy[0].setIsbn("9781449325862");
-
-            buyBooks.setCollectionOfIsbns(booksToBuy);
+            AddingBooksToProfileModel buyBooks = new AddingBooksToProfileModel(loginResponse.getUserId(),
+                    new BookIsbnModel[]{new BookIsbnModel("9781449325862")});
 
             given(addBooksSpecRequest)
                     .header("authorization", "Bearer " + userToken)
@@ -78,18 +69,20 @@ public class DemoShopTests extends TestBase {
         });
 
 
-        step("Вход на портал через UI",() ->{
+        step("Вход на портал через UI", () -> {
             open("/images/Toolsqa.jpg");
             getWebDriver().manage().addCookie(new Cookie("token", userToken));
             getWebDriver().manage().addCookie(new Cookie("userID", loginResponse.getUserId()));
             getWebDriver().manage().addCookie(new Cookie("expires", loginResponse.getExpires()));
-            open("/profile");});
+            open("/profile");
+        });
 
-        step("Удаление книги из профиля пользователя", ()->{
+        step("Удаление книги из профиля пользователя", () -> {
             $("#delete-record-undefined").click();
             $("#closeSmallModal-ok").click();
 
-        Selenide.dismiss();});
+            Selenide.dismiss();
+        });
 
 
         step("Проверка удаления книги из библиотеки пользователя", () ->

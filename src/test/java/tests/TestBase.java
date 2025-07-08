@@ -6,6 +6,7 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.restassured.RestAssured;
+import models.LoginBodyModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,5 +55,12 @@ public class TestBase {
         String server = System.getProperty("server");
 
         return "https://" + login + ":" + pw + "@" + server + "/wd/hub";
+    }
+
+    static LoginBodyModel getAuthData(){
+        String login = System.getProperty("shoplogin");
+        String pw = System.getProperty("shoppw");
+
+        return new LoginBodyModel(login,pw);
     }
 }
