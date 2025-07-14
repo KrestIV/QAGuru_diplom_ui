@@ -9,13 +9,21 @@ import static io.restassured.RestAssured.with;
 import static io.restassured.filter.log.LogDetail.ALL;
 import static io.restassured.http.ContentType.JSON;
 
-public class ProfileSpec {
-    public static RequestSpecification profileSpecRequest = with()
+public class RequestSpec {
+
+    public static RequestSpecification requestWithContentSpec = with()
             .filter(withCustomTemplates())
             .log().all()
             .contentType(JSON);
-    public static ResponseSpecification profileSpecResponse = new ResponseSpecBuilder()
-            .expectStatusCode(200)
-            .log(ALL)
-            .build();
+
+    public static RequestSpecification requestNoContentSpec = with()
+            .filter(withCustomTemplates())
+            .log().all();
+
+    public static ResponseSpecification responseSpec(int statusCode) {
+        return new ResponseSpecBuilder()
+                .expectStatusCode(statusCode)
+                .log(ALL)
+                .build();
+    }
 }

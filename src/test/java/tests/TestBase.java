@@ -54,7 +54,10 @@ public class TestBase {
         String pw = System.getProperty("pw");
         String server = System.getProperty("server");
 
-        return "https://" + login + ":" + pw + "@" + server + "/wd/hub";
+        if(login!=null&&pw!=null&&server!=null)
+            return "https://" + login + ":" + pw + "@" + server + "/wd/hub";
+        else
+            return null;
     }
 
     static LoginBodyModel getAuthData(){

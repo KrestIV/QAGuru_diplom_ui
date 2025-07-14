@@ -10,14 +10,8 @@ import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
-import static specs.AddBooksSpec.addBooksSpecRequest;
-import static specs.AddBooksSpec.addBooksSpecResponse;
-import static specs.EmptyLibrarySpec.emptyLibrarySpecRequest;
-import static specs.EmptyLibrarySpec.emptyLibrarySpecResponse;
-import static specs.LoginSpec.loginSpecRequest;
-import static specs.LoginSpec.loginSpecResponse;
-import static specs.ProfileSpec.profileSpecRequest;
-import static specs.ProfileSpec.profileSpecResponse;
+import static specs.RequestSpec.*;
+import static specs.RequestSpec.responseSpec;
 
 public class StepsTest {
 
@@ -25,35 +19,35 @@ public class StepsTest {
 
     @Step("Генерация авторизационного токена пользователя")
     public StepsTest generateToken(LoginBodyModel authData) {
-        given(loginSpecRequest)
+        given(requestWithContentSpec)
                 .body(authData)
                 .when()
                 .post("/Account/v1/GenerateToken")
                 .then()
-                .spec(loginSpecResponse);
+                .spec(responseSpec(200));
         return this;
     }
 
     @Step("Авторизация пользователя на портале")
     public StepsTest login(LoginBodyModel authData) {
-        loginResponse = given(loginSpecRequest)
+        loginResponse = given(requestWithContentSpec)
                 .body(authData)
                 .when()
                 .post("/Account/v1/login")
                 .then()
-                .spec(loginSpecResponse)
+                .spec(responseSpec(200))
                 .extract().as(LoginResponseModel.class);
         return this;
     }
 
     @Step("Очистка библиотеки пользователя")
     public StepsTest cleanLibrary() {
-        given(emptyLibrarySpecRequest)
+        given(requestNoContentSpec)
                 .header("authorization", "Bearer " + loginResponse.getToken())
                 .when()
                 .delete("/BookStore/v1/Books?UserId=" + loginResponse.getUserId())
                 .then()
-                .spec(emptyLibrarySpecResponse);
+                .spec(responseSpec(204));
 
         return this;
     }
@@ -63,13 +57,13 @@ public class StepsTest {
         AddingBooksToProfileModel buyBooks = new AddingBooksToProfileModel(loginResponse.getUserId(),
                 new BookIsbnModel[]{new BookIsbnModel("9781449325862")});
 
-        given(addBooksSpecRequest)
+        given(requestWithContentSpec)
                 .header("authorization", "Bearer " + loginResponse.getToken())
                 .when()
                 .body(buyBooks)
                 .post("/BookStore/v1/Books")
                 .then()
-                .spec(addBooksSpecResponse);
+                .spec(responseSpec(201));
 
         return this;
     }
@@ -98,12 +92,12 @@ public class StepsTest {
     @Step("Проверка удаления книги из библиотеки пользователя")
     public StepsTest libraryMustBeEmptyCheck() {
         ProfileResponseModel profileResponse =
-                given(profileSpecRequest)
+                given(requestWithContentSpec)
                         .header("authorization", "Bearer " + loginResponse.getToken())
                         .when()
                         .get("/Account/v1/User/" + loginResponse.getUserId())
                         .then()
-                        .spec(profileSpecResponse)
+                        .spec(responseSpec(200))
                         .extract().as(ProfileResponseModel.class);
 
         assertThat(profileResponse.getBooks()).isEmpty();
