@@ -17,7 +17,7 @@ public class StepsTest {
 
     public LoginResponseModel loginResponse;
 
-    @Step("Генерация авторизационного токена пользователя")
+    @Step("Генерация токена авторизации пользователя")
     public StepsTest generateToken(LoginBodyModel authData) {
         given(requestWithContentSpec)
                 .body(authData)

@@ -16,4 +16,18 @@ public class DemoShopTests extends TestBase {
                 .deleteBookUI()
                 .libraryMustBeEmptyCheck();
     }
+
+    @Test
+    public void deleteItemFromCartTest() {
+        AccountTests account = new AccountTests();
+        BookStoreTests bookStore = new BookStoreTests();
+
+        account.generateToken(getAuthData())
+                .login(getAuthData());
+        bookStore.cleanLibrary(account.loginResponse)
+                .addTestBook(account.loginResponse);
+
+        account.libraryMustBeEmptyCheck();
+
+    }
 }
