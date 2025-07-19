@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import models.LoginResponseModel;
 import org.openqa.selenium.Cookie;
@@ -10,6 +11,9 @@ import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 public class AccountPage {
+
+    private final SelenideElement deleteFirstBookButton = $("#delete-record-undefined"),
+    closeModalWindowButton = $("#closeSmallModal-ok");
 
     @Step("Вход на портал через UI")
     public AccountPage openProfilePageUI(LoginResponseModel loginResponse) {
@@ -24,8 +28,8 @@ public class AccountPage {
 
     @Step("Удаление книги из профиля пользователя")
     public AccountPage deleteBookUI() {
-        $("#delete-record-undefined").click();
-        $("#closeSmallModal-ok").click();
+        deleteFirstBookButton.click();
+        closeModalWindowButton.click();
 
         Selenide.dismiss();
 
