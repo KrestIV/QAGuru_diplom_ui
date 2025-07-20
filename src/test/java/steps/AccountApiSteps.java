@@ -1,4 +1,4 @@
-package tests;
+package steps;
 
 import io.qameta.allure.Step;
 import models.LoginBodyModel;
@@ -10,12 +10,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static specs.RequestSpec.requestWithContentSpec;
 import static specs.RequestSpec.responseSpec;
 
-public class AccountTests {
+public class AccountApiSteps {
 
     public LoginResponseModel loginResponse;
 
     @Step("Генерация токена авторизации пользователя")
-    public AccountTests generateToken(LoginBodyModel authData) {
+    public AccountApiSteps generateToken(LoginBodyModel authData) {
         given(requestWithContentSpec)
                 .body(authData)
                 .when()
@@ -26,7 +26,7 @@ public class AccountTests {
     }
 
     @Step("Авторизация пользователя на портале")
-    public AccountTests login(LoginBodyModel authData) {
+    public AccountApiSteps login(LoginBodyModel authData) {
         loginResponse = given(requestWithContentSpec)
                 .body(authData)
                 .when()
@@ -38,7 +38,7 @@ public class AccountTests {
     }
 
     @Step("Проверка удаления книги из библиотеки пользователя")
-    public AccountTests libraryMustBeEmptyCheck() {
+    public AccountApiSteps libraryMustBeEmptyCheck() {
         ProfileResponseModel profileResponse =
                 given(requestWithContentSpec)
                         .header("authorization", "Bearer " + loginResponse.getToken())

@@ -1,4 +1,4 @@
-package tests;
+package steps;
 
 import io.qameta.allure.Step;
 import models.AddingBooksToProfileModel;
@@ -9,10 +9,10 @@ import static io.restassured.RestAssured.given;
 import static specs.RequestSpec.*;
 import static specs.RequestSpec.responseSpec;
 
-public class BookStoreTests {
+public class BookStoreApiSteps {
 
     @Step("Очистка библиотеки пользователя")
-    public BookStoreTests cleanLibrary(LoginResponseModel loginResponse) {
+    public BookStoreApiSteps cleanLibrary(LoginResponseModel loginResponse) {
         given(requestNoContentSpec)
                 .header("authorization", "Bearer " + loginResponse.getToken())
                 .when()
@@ -24,7 +24,7 @@ public class BookStoreTests {
     }
 
     @Step("Добавление книги в библиотеку")
-    public BookStoreTests addTestBook(LoginResponseModel loginResponse) {
+    public BookStoreApiSteps addTestBook(LoginResponseModel loginResponse) {
         AddingBooksToProfileModel buyBooks = new AddingBooksToProfileModel(loginResponse.getUserId(),
                 new BookIsbnModel[]{new BookIsbnModel("9781449325862")});
 

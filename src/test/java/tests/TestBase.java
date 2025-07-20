@@ -36,12 +36,12 @@ public class TestBase {
     }
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
     }
 
     @AfterEach
-    void afterEach(){
+    void afterEach() {
         Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
         Attach.browserConsoleLogs();
@@ -49,21 +49,21 @@ public class TestBase {
         Selenide.closeWebDriver();
     }
 
-    static String getServer(){
+    static String getServer() {
         String login = System.getProperty("login");
         String pw = System.getProperty("pw");
         String server = System.getProperty("server");
 
-        if(login!=null&&pw!=null&&server!=null)
+        if (login != null && pw != null && server != null)
             return "https://" + login + ":" + pw + "@" + server + "/wd/hub";
         else
             return null;
     }
 
-    static LoginBodyModel getAuthData(){
+    static LoginBodyModel getAuthData() {
         String login = System.getProperty("shoplogin");
         String pw = System.getProperty("shoppw");
 
-        return new LoginBodyModel(login,pw);
+        return new LoginBodyModel(login, pw);
     }
 }

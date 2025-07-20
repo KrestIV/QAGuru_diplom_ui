@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class LoginResponseModel {
-    String userId,username,password,token,expires;
+    String userId, username, password, token, expires;
 
     @JsonProperty("created_date")
     String createdDate;

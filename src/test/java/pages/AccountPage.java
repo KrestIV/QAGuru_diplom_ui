@@ -13,7 +13,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 public class AccountPage {
 
     private final SelenideElement deleteFirstBookButton = $("#delete-record-undefined"),
-    closeModalWindowButton = $("#closeSmallModal-ok");
+            closeModalWindowButton = $("#closeSmallModal-ok");
 
     @Step("Вход на портал через UI")
     public AccountPage openProfilePageUI(LoginResponseModel loginResponse) {
