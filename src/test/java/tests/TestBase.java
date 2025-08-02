@@ -18,14 +18,15 @@ public class TestBase {
 
     @BeforeAll
     static void beforeAll() {
-        Configuration.baseUrl = "https://demoqa.com";
-        RestAssured.baseURI = "https://demoqa.com";
+        Configuration.baseUrl = "http://kakadu39.ru";
+        RestAssured.baseURI = "http://kakadu39.ru";
 
         Configuration.pageLoadStrategy = "eager";
 
         Configuration.browser = "chrome";
         Configuration.browserSize = "1920x1080";
-        Configuration.remote = getServer();
+        Configuration.holdBrowserOpen = true;
+        //Configuration.remote = getServer();
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
@@ -64,6 +65,6 @@ public class TestBase {
         String login = System.getProperty("shoplogin");
         String pw = System.getProperty("shoppw");
 
-        return new LoginBodyModel(login, pw);
+        return new LoginBodyModel(login, pw, "/");
     }
 }
