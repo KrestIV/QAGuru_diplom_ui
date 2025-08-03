@@ -1,63 +1,41 @@
 package tests;
 
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.conditions.Text;
-import io.restassured.path.xml.XmlPath;
+import io.restassured.http.Cookies;
+import io.restassured.response.Response;
 import models.LoginBodyModel;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Cookie;
-import pages.AccountPage;
-import steps.AccountApiSteps;
-import steps.BookStoreApiSteps;
-import io.restassured.response.Response;
-import io.restassured.http.Cookies;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static specs.RequestSpec.*;
 
-public class DemoShopTests extends TestBase {
+public class APITests extends APIBaseTests{
 
-//    @Test
-//    public void deleteItemFromCartTest() {
-//        AccountApiSteps account = new AccountApiSteps();
-//        BookStoreApiSteps bookStore = new BookStoreApiSteps();
-//        AccountPage accountPage = new AccountPage();
-//
-//
-//        account.generateToken(getAuthData())
-//                .login(getAuthData());
-//
-//        bookStore.cleanLibrary(account.loginResponse)
-//                .addTestBook(account.loginResponse);
-//
-//        accountPage.openProfilePageUI(account.loginResponse)
-//                .deleteBookUI();
-//
-//        account.libraryMustBeEmptyCheck();
-//
-//    }
-
-    //UI Tests
     @Test
-    public void loginWithCorrectCredentialsMustGreetUserTest() {
+    public void authorizeWithWrongPasswordShouldReturnErrorTest() {
+        String login = "tegir_st";
+        String pw = "RJSPFPyL8hLgekC" + "1";
+        LoginBodyModel authData = new LoginBodyModel(login, pw, "/");
+        Response response = given(requestWithContentSpec)
+                .contentType("application/x-www-form-urlencoded; charset=utf-8")
+                //.body(authData)
+                .formParam("login", login)
+                .formParam("password", pw)
+                .formParam("from_page", "/")
+                .when()
+                .post("/users/login_do/");
 
-        open("/");
-        $("input#login").setValue("tegir_st");
-        $("input#password").setValue("RJSPFPyL8hLgekC");
-        $("input.log_in_btn").click();
 
-        $("div.login_form").shouldHave(text("Добро пожаловать"));
+        response.then()
+                .spec(responseSpec(200));
+
+        String html = response.getBody().asString();
+        assertThat(html)
+                .contains("неверный логин или пароль");
     }
 
     @Test
-    public void addingItemToCartMustAddItemToCartTest(){
-
+    public void addedItemMustBeInCartTest(){
         //authorize
         String login = "tegir_st";
         String pw = "RJSPFPyL8hLgekC";
@@ -88,15 +66,16 @@ public class DemoShopTests extends TestBase {
 
         response.then()
                 .spec(responseSpec(200));
-        //UI add item
 
-        open("/images/dsgn/menu_cats_pic.png");
-        getWebDriver().manage().addCookie(new Cookie("PHPSESSID", phpSessId));
-        getWebDriver().manage().addCookie(new Cookie("stat_id", statId));
+        //add item
+        response = given(requestNoContentSpec)
+                .cookies("PHPSESSID",phpSessId)
+                .cookies("stat_id",statId)
+                .when()
+                .get("/emarket/basket/put/element/3285/");
 
-        open("/razdely_i_tovary/molina_krabov_palochki_s_kur_dsobak_80g/korma_dlya_sobak/");
-
-        $("a[href=\"/emarket/basket/put/element/3285/\"]").click();
+        response.then()
+                .spec(responseSpec(200));
 
         //check cart
         response = given(requestNoContentSpec)
@@ -125,7 +104,7 @@ public class DemoShopTests extends TestBase {
     }
 
     @Test
-    public void deletingItemFromCartMustEmptyCartTest(){
+    public void afterCleaningCartMustBeEmptyTest(){
         //authorize
         String login = "tegir_st";
         String pw = "RJSPFPyL8hLgekC";
@@ -147,16 +126,6 @@ public class DemoShopTests extends TestBase {
         String phpSessId = cookies.getValue("PHPSESSID");
         String statId = cookies.getValue("stat_id");
 
-        //clean cart
-        response = given(requestNoContentSpec)
-                .cookies("PHPSESSID",phpSessId)
-                .cookies("stat_id",statId)
-                .when()
-                .get("/emarket/basket/remove_all/");
-
-        response.then()
-                .spec(responseSpec(200));
-
         //add item
         response = given(requestNoContentSpec)
                 .cookies("PHPSESSID",phpSessId)
@@ -166,14 +135,16 @@ public class DemoShopTests extends TestBase {
 
         response.then()
                 .spec(responseSpec(200));
-        //UI delete item
-        open("/images/dsgn/menu_cats_pic.png");
-        getWebDriver().manage().addCookie(new Cookie("PHPSESSID", phpSessId));
-        getWebDriver().manage().addCookie(new Cookie("stat_id", statId));
 
-        open("/emarket/cart/");
+        //clean cart
+        response = given(requestNoContentSpec)
+                .cookies("PHPSESSID",phpSessId)
+                .cookies("stat_id",statId)
+                .when()
+                .get("/emarket/basket/remove_all/");
 
-        $("a[title=\"Удалить\"]").click();
+        response.then()
+                .spec(responseSpec(200));
 
         //check cart
         response = given(requestNoContentSpec)
@@ -188,11 +159,10 @@ public class DemoShopTests extends TestBase {
         String html = response.getBody().asString();
         assertThat(html)
                 .contains("Корзина пуста");
-
     }
 
     @Test
-    public void openingPurchasePageMustShowPurchaseFormTest(){
+    public void addingNonexistentItemToCartMustReturnErrorTest(){
         //authorize
         String login = "tegir_st";
         String pw = "RJSPFPyL8hLgekC";
@@ -224,46 +194,33 @@ public class DemoShopTests extends TestBase {
         response.then()
                 .spec(responseSpec(200));
 
-        //add item
+        //add nonexistent item and check error
         response = given(requestNoContentSpec)
                 .cookies("PHPSESSID",phpSessId)
                 .cookies("stat_id",statId)
                 .when()
-                .get("/emarket/basket/put/element/3158/");
+                .get("/emarket/basket/put/element/999999999/");
 
         response.then()
                 .spec(responseSpec(200));
 
-        //UI open checkout page
-        open("/images/dsgn/menu_cats_pic.png");
-        getWebDriver().manage().addCookie(new Cookie("PHPSESSID", phpSessId));
-        getWebDriver().manage().addCookie(new Cookie("stat_id", statId));
-
-        open("/emarket/purchase/?");
-
-        //check checkout page
-        $("input[name=\"data[new][index]\"]").shouldBe(visible);
-        $("input[name=\"data[new][region]\"]").shouldBe(visible);
-        $("input[name=\"data[new][city]\"]").shouldBe(visible);
-        $("input[name=\"data[new][street]\"]").shouldBe(visible);
-        $("input[name=\"data[new][house]\"]").shouldBe(visible);
-        $("input[name=\"data[new][flat]\"]").shouldBe(visible);
-        $("textarea[name=\"data[new][order_comments]\"]").shouldBe(visible);
-
-        //clean cart
+        //check cart
         response = given(requestNoContentSpec)
                 .cookies("PHPSESSID",phpSessId)
                 .cookies("stat_id",statId)
                 .when()
-                .get("/emarket/basket/remove_all/");
+                .get("/emarket/cart/");
 
         response.then()
                 .spec(responseSpec(200));
+
+        String html = response.getBody().asString();
+        assertThat(html)
+                .contains("Корзина пуста");
     }
 
     @Test
-    public void searchItemMustShowListOfItemsTest(){
-
+    public void changingProfileMustBeSavedInProfileTest(){
         //authorize
         String login = "tegir_st";
         String pw = "RJSPFPyL8hLgekC";
@@ -285,17 +242,52 @@ public class DemoShopTests extends TestBase {
         String phpSessId = cookies.getValue("PHPSESSID");
         String statId = cookies.getValue("stat_id");
 
-        //open main page
-        open("/images/dsgn/menu_cats_pic.png");
-        getWebDriver().manage().addCookie(new Cookie("PHPSESSID", phpSessId));
-        getWebDriver().manage().addCookie(new Cookie("stat_id", statId));
+        //change profile
+        response = given(requestWithContentSpec)
+                .contentType("application/x-www-form-urlencoded; charset=utf-8")
+                .formParam("password", "")
+                .formParam("password_confirm", "")
+                .formParam("email", "tegir_st@mail.ru")
+                .formParam("data[720575][lname]", "")
+                .formParam("data[720575][fname]", "степан")
+                .formParam("data[720575][father_name]", "Тамерланович")
+                .cookies("PHPSESSID",phpSessId)
+                .cookies("stat_id",statId)
+                .when()
+                .post("/users/settings_do/");
 
-        open("/");
+        response.then()
+                .spec(responseSpec(301));
 
-        //search
-        $("input[name=\"search_string\"]").setValue("фитомины").submit();
+        //check profile
+        response = given(requestNoContentSpec)
+                .cookies("PHPSESSID",phpSessId)
+                .cookies("stat_id",statId)
+                .when()
+                .get("/users/settings/");
 
-        //check result
-        $("div.grey_border_block_center").shouldHave(text("страниц"));
+        response.then()
+                .spec(responseSpec(200));
+
+        String html = response.getBody().asString();
+        assertThat(html)
+                .contains("Тамерланович");
+
+        //change profile back
+        response = given(requestWithContentSpec)
+                .contentType("application/x-www-form-urlencoded; charset=utf-8")
+                .formParam("password", "")
+                .formParam("password_confirm", "")
+                .formParam("email", "tegir_st@mail.ru")
+                .formParam("data[720575][lname]", "")
+                .formParam("data[720575][fname]", "степан")
+                .formParam("data[720575][father_name]", "")
+                .cookies("PHPSESSID",phpSessId)
+                .cookies("stat_id",statId)
+                .when()
+                .post("/users/settings_do/");
+
+        response.then()
+                .spec(responseSpec(301));
     }
 }
