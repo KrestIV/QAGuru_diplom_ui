@@ -61,10 +61,12 @@ public class TestBase {
             return null;
     }
 
-    static LoginBodyModel getAuthData() {
-        String login = System.getProperty("shoplogin");
-        String pw = System.getProperty("shoppw");
+    static String[] getAuthData() {
+//        String login = System.getProperty("shoplogin");
+//        String pw = System.getProperty("shoppw");
+//
+//        return new LoginBodyModel(login, pw, "/");
 
-        return new LoginBodyModel(login, pw, "/");
+        return new String[]{"tegir_st","RJSPFPyL8hLgekC"};
     }
 }
