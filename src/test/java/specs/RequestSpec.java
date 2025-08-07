@@ -7,14 +7,13 @@ import io.restassured.specification.ResponseSpecification;
 import static helpers.CustomAllureListener.withCustomTemplates;
 import static io.restassured.RestAssured.with;
 import static io.restassured.filter.log.LogDetail.ALL;
-import static io.restassured.http.ContentType.JSON;
 
 public class RequestSpec {
 
     public static RequestSpecification requestWithContentSpec = with()
             .filter(withCustomTemplates())
             .log().all()
-            .contentType(JSON);
+            .contentType("application/x-www-form-urlencoded; charset=utf-8");
 
     public static RequestSpecification requestNoContentSpec = with()
             .filter(withCustomTemplates())

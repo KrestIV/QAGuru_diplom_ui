@@ -3,6 +3,8 @@ package pages;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
+import java.util.Map;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -22,9 +24,9 @@ public class MainPage {
     }
 
     @Step("Авторизоваться пользователем")
-    public MainPage login(String[] loginInfo){
-        inputLogin.setValue(loginInfo[0]);
-        inputPassword.setValue(loginInfo[1]);
+    public MainPage login(Map<String, String> loginInfo){
+        inputLogin.setValue(loginInfo.get("login"));
+        inputPassword.setValue(loginInfo.get("password"));
         buttonSubmit.click();
         return this;
     }

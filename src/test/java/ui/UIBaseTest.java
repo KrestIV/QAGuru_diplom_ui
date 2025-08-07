@@ -1,4 +1,4 @@
-package tests;
+package ui;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
@@ -6,15 +6,15 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.restassured.RestAssured;
-import models.LoginBodyModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.util.HashMap;
 import java.util.Map;
 
-public class TestBase {
+public class UIBaseTest {
 
     @BeforeAll
     static void beforeAll() {
@@ -25,7 +25,7 @@ public class TestBase {
 
         Configuration.browser = "chrome";
         Configuration.browserSize = "1920x1080";
-        Configuration.holdBrowserOpen = true;
+//        Configuration.holdBrowserOpen = true;
         //Configuration.remote = getServer();
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -61,12 +61,15 @@ public class TestBase {
             return null;
     }
 
-    static String[] getAuthData() {
-//        String login = System.getProperty("shoplogin");
-//        String pw = System.getProperty("shoppw");
-//
-//        return new LoginBodyModel(login, pw, "/");
+    public Map<String, String> getAuthInfo(){
+        String login = "tegir_st";
+        String pw = "RJSPFPyL8hLgekC";
 
-        return new String[]{"tegir_st","RJSPFPyL8hLgekC"};
+        Map<String, String> authFormData = new HashMap<>();
+        authFormData.put("login",login);
+        authFormData.put("password",pw);
+        authFormData.put("from_page","/");
+
+        return authFormData;
     }
 }
