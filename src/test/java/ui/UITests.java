@@ -1,11 +1,20 @@
 package ui;
 
+import helpers.CookieStorage;
 import org.junit.jupiter.api.Test;
 import pages.*;
 import steps.CartAPISteps;
 import steps.LoginAPISteps;
 
 public class UITests extends UIBaseTest {
+
+    MainPage mainPage = new MainPage();
+    SearchPage searchPage = new SearchPage();
+    PurchasePage purchasePage = new PurchasePage();
+    CartPage cartPage = new CartPage();
+    DogFoodPage dogFoodPage = new DogFoodPage();
+    LoginAPISteps apiClient = new LoginAPISteps();
+    CartAPISteps apiCart = new CartAPISteps();
 
     //UI Tests
     @Test
@@ -16,107 +25,79 @@ public class UITests extends UIBaseTest {
         mainPage.openMainPage()
                 .login(getAuthInfo())
                 .checkLogin();
-
     }
 
     @Test
     public void addingItemToCartMustAddItemToCartTest(){
 
-        LoginAPISteps client = new LoginAPISteps();
-        DogFoodPage dogFoodPage = new DogFoodPage();
-        CartAPISteps cart = new CartAPISteps();
+        apiClient.receiveCookies(getAuthInfo());
 
-        client.login(getAuthInfo());
+        apiCart.prepareCart();
 
-        cart.clearCart(client.getCookies());
-
-        dogFoodPage.openPageWithAuthorizedUser(client.getCookies())
+        dogFoodPage.openPageWithAuthorizedUser(CookieStorage.getCookies())
                 .addItemToCart();
 
-        cart.getCart(client.getCookies())
-                .checkCart("Brit Fresh Chicken")
-                .clearCart(client.getCookies());
-
+        apiCart.checkCart("Brit Fresh Chicken");
     }
 
     @Test
     public void addingTwoItemsToCartMustDisplayNumberOfItemsInCartTest(){
 
-        LoginAPISteps client = new LoginAPISteps();
-        CartPage cartPage = new CartPage();
-        CartAPISteps cart = new CartAPISteps();
+        apiClient.receiveCookies(getAuthInfo());
 
-        client.login(getAuthInfo());
+        apiCart.prepareCart()
+                .putItemToCart("3158")
+                .putItemToCart("3158");
 
-        cart.clearCart(client.getCookies())
-                .putItemToCart(client.getCookies(),"3158")
-                .putItemToCart(client.getCookies(),"3158");
-
-        cartPage.openCartPageWithAuthorizedUser(client.getCookies())
+        cartPage.openCartPageWithAuthorizedUser(CookieStorage.getCookies())
                 .checkFirstItemQuantity();
 
-        cart.clearCart(client.getCookies());
+        apiCart.prepareCart();
     }
 
     @Test
     public void deletingItemFromCartMustEmptyCartTest(){
-        LoginAPISteps client = new LoginAPISteps();
-        CartPage cartPage = new CartPage();
-        CartAPISteps cart = new CartAPISteps();
 
-        client.login(getAuthInfo());
+        apiClient.receiveCookies(getAuthInfo());
 
-        cart.clearCart(client.getCookies())
-                .putItemToCart(client.getCookies(),"3158");
+        apiCart.prepareCart()
+                .putItemToCart("3158");
 
-        cartPage.openCartPageWithAuthorizedUser(client.getCookies())
+        cartPage.openCartPageWithAuthorizedUser(CookieStorage.getCookies())
                 .deleteFirstItem();
 
-        cart.getCart(client.getCookies())
-                .checkCart("Корзина пуста");
+        apiCart.checkCart("Корзина пуста");
     }
 
     @Test
     public void clearCartMustEmptyCartTest(){
-        LoginAPISteps client = new LoginAPISteps();
-        CartPage cartPage = new CartPage();
-        CartAPISteps cart = new CartAPISteps();
 
-        client.login(getAuthInfo());
+        apiClient.receiveCookies(getAuthInfo());
 
-        cart.clearCart(client.getCookies())
-                .putItemToCart(client.getCookies(),"3158")
-                .putItemToCart(client.getCookies(),"721468");
+        apiCart.prepareCart()
+                .putItemToCart("3158")
+                .putItemToCart("721468");
 
-        cartPage.openCartPageWithAuthorizedUser(client.getCookies())
+        cartPage.openCartPageWithAuthorizedUser(CookieStorage.getCookies())
                 .clearCart();
 
-        cart.getCart(client.getCookies())
-                .checkCart("Корзина пуста");
-
+        apiCart.checkCart("Корзина пуста");
     }
 
     @Test
     public void openingPurchasePageMustShowPurchaseFormTest(){
-        LoginAPISteps client = new LoginAPISteps();
-        PurchasePage purchasePage = new PurchasePage();
-        CartAPISteps cart = new CartAPISteps();
 
-        client.login(getAuthInfo());
+        apiClient.receiveCookies(getAuthInfo());
 
-        cart.clearCart(client.getCookies())
-                .putItemToCart(client.getCookies(),"3158");
+        apiCart.prepareCart()
+                .putItemToCart("3158");
 
-        purchasePage.openPurchasePageWithAuthorizedUser(client.getCookies())
+        purchasePage.openPurchasePageWithAuthorizedUser(CookieStorage.getCookies())
                 .checkPurchaseForm();
-
-        cart.clearCart(client.getCookies());
     }
 
     @Test
     public void searchItemMustShowListOfItemsTest(){
-        MainPage mainPage = new MainPage();
-        SearchPage searchPage = new SearchPage();
 
         mainPage.openMainPage()
                 .search("фитомины");

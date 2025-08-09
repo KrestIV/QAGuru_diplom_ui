@@ -2,8 +2,7 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-
-import java.util.Map;
+import models.AuthDataModel;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
@@ -11,7 +10,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class MainPage {
 
-    private final SelenideElement inputLogin = $("input#login"),
+    private final SelenideElement inputLogin = $("input#receiveCookies"),
             inputPassword = $("input#password"),
             buttonSubmit = $("input.log_in_btn"),
             formLogin = $("div.login_form"),
@@ -24,9 +23,9 @@ public class MainPage {
     }
 
     @Step("Авторизоваться пользователем")
-    public MainPage login(Map<String, String> loginInfo){
-        inputLogin.setValue(loginInfo.get("login"));
-        inputPassword.setValue(loginInfo.get("password"));
+    public MainPage login(AuthDataModel loginInfo){
+        inputLogin.setValue(loginInfo.getAuthFormData().get("receiveCookies"));
+        inputPassword.setValue(loginInfo.getAuthFormData().get("password"));
         buttonSubmit.click();
         return this;
     }

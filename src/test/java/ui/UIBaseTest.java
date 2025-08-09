@@ -6,6 +6,9 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.restassured.RestAssured;
+import models.AuthDataModel;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UIBaseTest {
+
+    private static final Log log = LogFactory.getLog(UIBaseTest.class);
 
     @BeforeAll
     static void beforeAll() {
@@ -51,7 +56,7 @@ public class UIBaseTest {
     }
 
     static String getServer() {
-        String login = System.getProperty("login");
+        String login = System.getProperty("receiveCookies");
         String pw = System.getProperty("pw");
         String server = System.getProperty("server");
 
@@ -61,14 +66,17 @@ public class UIBaseTest {
             return null;
     }
 
-    public Map<String, String> getAuthInfo(){
+    public AuthDataModel getAuthInfo(){
         String login = "tegir_st";
         String pw = "RJSPFPyL8hLgekC";
 
-        Map<String, String> authFormData = new HashMap<>();
-        authFormData.put("login",login);
-        authFormData.put("password",pw);
-        authFormData.put("from_page","/");
+        Map<String, String> authData = new HashMap<>();
+        authData.put("receiveCookies",login);
+        authData.put("password",pw);
+        authData.put("from_page","/");
+
+        AuthDataModel authFormData = new AuthDataModel();
+        authFormData.setAuthFormData(authData);
 
         return authFormData;
     }

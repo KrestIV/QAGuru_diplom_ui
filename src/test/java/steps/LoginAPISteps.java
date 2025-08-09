@@ -1,8 +1,10 @@
 package steps;
 
+import helpers.CookieStorage;
 import io.qameta.allure.Step;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
+import models.AuthDataModel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,14 +19,17 @@ public class LoginAPISteps {
     private Response response;
 
     @Step("Авторизовать пользователя")
-    public LoginAPISteps login(Map<String, String> authFormData) {
+    public LoginAPISteps receiveCookies(AuthDataModel authFormData) {
         response = given(requestWithContentSpec)
-                .formParams(authFormData)
+                .formParams(authFormData.getAuthFormData())
                 .when()
                 .post("/users/login_do/");
 
         response.then()
                 .spec(responseSpec(301));
+
+        CookieStorage.getInstance();
+        CookieStorage.setCookies(getCookies());
 
         return this;
     }

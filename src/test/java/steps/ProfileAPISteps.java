@@ -1,5 +1,6 @@
 package steps;
 
+import helpers.CookieStorage;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
@@ -14,10 +15,10 @@ public class ProfileAPISteps {
 
     private Response response;
 
-    @Step("Авторизовать пользователя")
-    public ProfileAPISteps getSettings(Map<String, String> cookies) {
+    @Step("Получить настройки профиля")
+    public ProfileAPISteps getSettings() {
         response = given(requestNoContentSpec)
-                .cookies(cookies)
+                .cookies(CookieStorage.getCookies())
                 .when()
                 .get("/users/settings/");
 
@@ -27,11 +28,11 @@ public class ProfileAPISteps {
         return this;
     }
 
-    @Step("Авторизовать пользователя с неверным паролем")
-    public ProfileAPISteps changeSettings(Map<String, String> settingsFormData, Map<String, String> cookies) {
+    @Step("Изменить настройки профиля")
+    public ProfileAPISteps changeSettings(Map<String, String> settingsFormData) {
         response = given(requestWithContentSpec)
                 .formParams(settingsFormData)
-                .cookies(cookies)
+                .cookies(CookieStorage.getCookies())
                 .when()
                 .post("/users/settings_do/");
 
@@ -41,7 +42,7 @@ public class ProfileAPISteps {
         return this;
     }
 
-    @Step("Проверить авторизацию пользователя")
+    @Step("Проверить внесенные в профиль изменения")
     public ProfileAPISteps checkSettings() {
         String html = response.getBody().asString();
         assertThat(html)

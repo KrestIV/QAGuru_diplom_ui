@@ -28,7 +28,7 @@ public class APIBaseTests {
         String pw = "RJSPFPyL8hLgekC" + additionToPassword;
 
         Map<String, String> authFormData = new HashMap<>();
-        authFormData.put("login",login);
+        authFormData.put("receiveCookies",login);
         authFormData.put("password",pw);
         authFormData.put("from_page","/");
 
