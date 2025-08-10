@@ -1,4 +1,4 @@
-package steps;
+package uiapisteps;
 
 import helpers.CookieStorage;
 import io.qameta.allure.Step;
@@ -10,8 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
-import static org.assertj.core.api.Assertions.assertThat;
-import static specs.RequestSpec.requestWithContentSpec;
+import static specs.RequestSpec.requestWithFormContentSpec;
 import static specs.RequestSpec.responseSpec;
 
 public class LoginAPISteps {
@@ -20,7 +19,7 @@ public class LoginAPISteps {
 
     @Step("Авторизовать пользователя")
     public LoginAPISteps receiveCookies(AuthDataModel authFormData) {
-        response = given(requestWithContentSpec)
+        response = given(requestWithFormContentSpec)
                 .formParams(authFormData.getAuthFormData())
                 .when()
                 .post("/users/login_do/");
@@ -30,28 +29,6 @@ public class LoginAPISteps {
 
         CookieStorage.getInstance();
         CookieStorage.setCookies(getCookies());
-
-        return this;
-    }
-
-    @Step("Авторизовать пользователя с неверным паролем")
-    public LoginAPISteps loginWithWrongPassword(Map<String, String> authFormData) {
-        response = given(requestWithContentSpec)
-                .formParams(authFormData)
-                .when()
-                .post("/users/login_do/");
-
-        response.then()
-                .spec(responseSpec(200));
-
-        return this;
-    }
-
-    @Step("Проверить авторизацию пользователя")
-    public LoginAPISteps checkLoginError() {
-        String html = response.getBody().asString();
-        assertThat(html)
-                .contains("неверный логин или пароль");
 
         return this;
     }

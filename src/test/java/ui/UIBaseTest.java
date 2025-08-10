@@ -71,7 +71,7 @@ public class UIBaseTest {
         String pw = "RJSPFPyL8hLgekC";
 
         Map<String, String> authData = new HashMap<>();
-        authData.put("receiveCookies",login);
+        authData.put("login",login);
         authData.put("password",pw);
         authData.put("from_page","/");
 

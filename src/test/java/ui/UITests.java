@@ -3,8 +3,8 @@ package ui;
 import helpers.CookieStorage;
 import org.junit.jupiter.api.Test;
 import pages.*;
-import steps.CartAPISteps;
-import steps.LoginAPISteps;
+import uiapisteps.CartAPISteps;
+import uiapisteps.LoginAPISteps;
 
 public class UITests extends UIBaseTest {
 

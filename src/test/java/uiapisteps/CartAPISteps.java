@@ -1,4 +1,4 @@
-package steps;
+package uiapisteps;
 
 import helpers.CookieStorage;
 import io.qameta.allure.Step;
