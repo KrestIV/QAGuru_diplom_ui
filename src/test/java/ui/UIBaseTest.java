@@ -34,7 +34,7 @@ public class UIBaseTest {
         Configuration.browser = config.getBrowserName();
         Configuration.browserVersion = config.getBrowserVersion();
         Configuration.browserSize = config.getBrowserSize();
-        Configuration.remote = getServer();
+        Configuration.remote = config.getServerAddress();
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
@@ -56,17 +56,6 @@ public class UIBaseTest {
         Attach.browserConsoleLogs();
         Attach.addVideo();
         Selenide.closeWebDriver();
-    }
-
-    static String getServer() {
-        String login = config.getLogin();
-        String pw = config.getPassword();
-        String server = config.getServerAddress();
-
-        if (login != null && pw != null && server != null)
-            return "https://" + login + ":" + pw + "@" + server + "/wd/hub";
-        else
-            return null;
     }
 
     public AuthDataModel getAuthInfo(){
