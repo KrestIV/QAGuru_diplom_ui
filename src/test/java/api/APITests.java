@@ -2,6 +2,7 @@ package api;
 
 import models.ConfirmMessageModel;
 import models.PetModel;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -9,10 +10,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static io.qameta.allure.Allure.step;
 import static specs.RequestSpec.*;
 
+@Tag("APITests")
+@Tag("FullTest")
 public class APITests extends APIBaseTests {
 
 
     @Test
+            //@Tag("user_tests")
     public void addingPetMustReturnCorrectAnswer() {
         PetModel pet = step("Подготовить данные питомца для добавления в базу", () ->
                 new PetModel());

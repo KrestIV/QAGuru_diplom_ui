@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class MainPage {
 
-    private final SelenideElement inputLogin = $("input#receiveCookies"),
+    private final SelenideElement inputLogin = $("input#login"),
             inputPassword = $("input#password"),
             buttonSubmit = $("input.log_in_btn"),
             formLogin = $("div.login_form"),
@@ -24,7 +24,7 @@ public class MainPage {
 
     @Step("Авторизоваться пользователем")
     public MainPage login(AuthDataModel loginInfo){
-        inputLogin.setValue(loginInfo.getAuthFormData().get("receiveCookies"));
+        inputLogin.setValue(loginInfo.getAuthFormData().get("login"));
         inputPassword.setValue(loginInfo.getAuthFormData().get("password"));
         buttonSubmit.click();
         return this;

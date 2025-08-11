@@ -3,10 +3,12 @@ package ui;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import config.LaunchConfig;
 import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.restassured.RestAssured;
 import models.AuthDataModel;
+import org.aeonbits.owner.ConfigFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.AfterEach;
@@ -20,6 +22,7 @@ import java.util.Map;
 public class UIBaseTest {
 
     private static final Log log = LogFactory.getLog(UIBaseTest.class);
+    static LaunchConfig config = ConfigFactory.create(LaunchConfig.class, System.getProperties());
 
     @BeforeAll
     static void beforeAll() {
@@ -28,10 +31,10 @@ public class UIBaseTest {
 
         Configuration.pageLoadStrategy = "eager";
 
-        Configuration.browser = "chrome";
-        Configuration.browserSize = "1920x1080";
-//        Configuration.holdBrowserOpen = true;
-        //Configuration.remote = getServer();
+        Configuration.browser = config.getBrowserName();
+        Configuration.browserVersion = config.getBrowserVersion();
+        Configuration.browserSize = config.getBrowserSize();
+        Configuration.remote = getServer();
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
@@ -56,9 +59,9 @@ public class UIBaseTest {
     }
 
     static String getServer() {
-        String login = System.getProperty("receiveCookies");
-        String pw = System.getProperty("pw");
-        String server = System.getProperty("server");
+        String login = config.getLogin();
+        String pw = config.getPassword();
+        String server = config.getServerAddress();
 
         if (login != null && pw != null && server != null)
             return "https://" + login + ":" + pw + "@" + server + "/wd/hub";
@@ -67,8 +70,8 @@ public class UIBaseTest {
     }
 
     public AuthDataModel getAuthInfo(){
-        String login = "tegir_st";
-        String pw = "RJSPFPyL8hLgekC";
+        String login = config.getShopLogin();
+        String pw = config.getShopPassword();
 
         Map<String, String> authData = new HashMap<>();
         authData.put("login",login);

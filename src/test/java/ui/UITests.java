@@ -1,11 +1,14 @@
 package ui;
 
 import helpers.CookieStorage;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.*;
 import uiapisteps.CartAPISteps;
 import uiapisteps.LoginAPISteps;
 
+@Tag("UITests")
+@Tag("FullTest")
 public class UITests extends UIBaseTest {
 
     MainPage mainPage = new MainPage();

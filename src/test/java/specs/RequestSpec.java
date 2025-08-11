@@ -15,7 +15,7 @@ public class RequestSpec {
     public static RequestSpecification requestWithFormContentSpec = with()
             .filter(withCustomTemplates())
             .log().all()
-            .contentType(URLENC);
+            .contentType(URLENC.withCharset("UTF-8"));
 
     public static RequestSpecification requestWithJsonContentSpec = with()
             .filter(withCustomTemplates())
