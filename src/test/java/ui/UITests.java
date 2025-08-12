@@ -7,7 +7,7 @@ import pages.*;
 import uiapisteps.CartAPISteps;
 import uiapisteps.LoginAPISteps;
 
-@Tag("UITests")
+//@Tag("UITests")
 @Tag("FullTest")
 public class UITests extends UIBaseTest {
 
@@ -21,6 +21,7 @@ public class UITests extends UIBaseTest {
 
     //UI Tests
     @Test
+    @Tag("UITests")
     public void loginWithCorrectCredentialsMustGreetUserTest() {
 
         MainPage mainPage = new MainPage();

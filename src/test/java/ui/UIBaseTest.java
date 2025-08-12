@@ -9,8 +9,6 @@ import io.qameta.allure.selenide.AllureSelenide;
 import io.restassured.RestAssured;
 import models.AuthDataModel;
 import org.aeonbits.owner.ConfigFactory;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,11 +19,10 @@ import java.util.Map;
 
 public class UIBaseTest {
 
-    private static final Log log = LogFactory.getLog(UIBaseTest.class);
-    static LaunchConfig config = ConfigFactory.create(LaunchConfig.class, System.getProperties());
-
     @BeforeAll
     static void beforeAll() {
+        LaunchConfig config = ConfigFactory.create(LaunchConfig.class, System.getProperties());
+
         Configuration.baseUrl = "http://kakadu39.ru";
         RestAssured.baseURI = "http://kakadu39.ru";
 
@@ -33,8 +30,9 @@ public class UIBaseTest {
 
         Configuration.browser = config.getBrowserName();
         Configuration.browserVersion = config.getBrowserVersion();
-        Configuration.browserSize = config.getBrowserSize();
+        //Configuration.browserSize = config.getBrowserSize();
         Configuration.remote = config.getServerAddress();
+        System.out.println(config.getServerAddress());
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
@@ -59,6 +57,7 @@ public class UIBaseTest {
     }
 
     public AuthDataModel getAuthInfo(){
+        LaunchConfig config = ConfigFactory.create(LaunchConfig.class, System.getProperties());
         String login = config.getShopLogin();
         String pw = config.getShopPassword();
 
