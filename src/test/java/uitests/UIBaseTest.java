@@ -1,4 +1,4 @@
-package ui;
+package uitests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
@@ -56,15 +56,15 @@ public class UIBaseTest {
         Selenide.closeWebDriver();
     }
 
-    public AuthDataModel getAuthInfo(){
+    public AuthDataModel getAuthInfo() {
         LaunchConfig config = ConfigFactory.create(LaunchConfig.class, System.getProperties());
         String login = config.getShopLogin();
         String pw = config.getShopPassword();
 
         Map<String, String> authData = new HashMap<>();
-        authData.put("login",login);
-        authData.put("password",pw);
-        authData.put("from_page","/");
+        authData.put("login", login);
+        authData.put("password", pw);
+        authData.put("from_page", "/");
 
         AuthDataModel authFormData = new AuthDataModel();
         authFormData.setAuthFormData(authData);

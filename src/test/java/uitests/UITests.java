@@ -1,4 +1,4 @@
-package ui;
+package uitests;
 
 import helpers.CookieStorage;
 import org.junit.jupiter.api.Tag;
@@ -32,7 +32,7 @@ public class UITests extends UIBaseTest {
     }
 
     @Test
-    public void addingItemToCartMustAddItemToCartTest(){
+    public void addingItemToCartMustAddItemToCartTest() {
 
         apiClient.receiveCookies(getAuthInfo());
 
@@ -45,7 +45,7 @@ public class UITests extends UIBaseTest {
     }
 
     @Test
-    public void addingTwoItemsToCartMustDisplayNumberOfItemsInCartTest(){
+    public void addingTwoItemsToCartMustDisplayNumberOfItemsInCartTest() {
 
         apiClient.receiveCookies(getAuthInfo());
 
@@ -60,7 +60,7 @@ public class UITests extends UIBaseTest {
     }
 
     @Test
-    public void deletingItemFromCartMustEmptyCartTest(){
+    public void deletingItemFromCartMustEmptyCartTest() {
 
         apiClient.receiveCookies(getAuthInfo());
 
@@ -74,7 +74,7 @@ public class UITests extends UIBaseTest {
     }
 
     @Test
-    public void clearCartMustEmptyCartTest(){
+    public void clearCartMustEmptyCartTest() {
 
         apiClient.receiveCookies(getAuthInfo());
 
@@ -89,7 +89,7 @@ public class UITests extends UIBaseTest {
     }
 
     @Test
-    public void openingPurchasePageMustShowPurchaseFormTest(){
+    public void openingPurchasePageMustShowPurchaseFormTest() {
 
         apiClient.receiveCookies(getAuthInfo());
 
@@ -101,7 +101,7 @@ public class UITests extends UIBaseTest {
     }
 
     @Test
-    public void searchItemMustShowListOfItemsTest(){
+    public void searchItemMustShowListOfItemsTest() {
 
         mainPage.openMainPage()
                 .search("фитомины");

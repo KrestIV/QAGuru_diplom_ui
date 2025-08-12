@@ -20,7 +20,7 @@ public class DogFoodPage {
         for (Map.Entry<String, String> entry : cookies.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            getWebDriver().manage().addCookie(new Cookie(key,value));
+            getWebDriver().manage().addCookie(new Cookie(key, value));
         }
 
         open("/razdely_i_tovary/molina_krabov_palochki_s_kur_dsobak_80g/korma_dlya_sobak/");

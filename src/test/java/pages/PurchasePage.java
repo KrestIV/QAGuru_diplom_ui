@@ -19,15 +19,7 @@ public class PurchasePage {
             inputStreet = $("input[name=\"data[new][street]\"]"),
             inputBuilding = $("input[name=\"data[new][house]\"]"),
             inputApartment = $("input[name=\"data[new][flat]\"]"),
-            tareaOrderComment = $("textarea[name=\"data[new][order_comments]\"]");
-
-//    $("input[name=\"data[new][index]\"]").shouldBe(visible);
-//    $("input[name=\"data[new][region]\"]").shouldBe(visible);
-//    $("input[name=\"data[new][city]\"]").shouldBe(visible);
-//    $("input[name=\"data[new][street]\"]").shouldBe(visible);
-//    $("input[name=\"data[new][house]\"]").shouldBe(visible);
-//    $("input[name=\"data[new][flat]\"]").shouldBe(visible);
-//    $("textarea[name=\"data[new][order_comments]\"]").shouldBe(visible);
+            tAreaOrderComment = $("textarea[name=\"data[new][order_comments]\"]");
 
     @Step("Открыть страницу заказа авторизованным пользователем")
     public PurchasePage openPurchasePageWithAuthorizedUser(Map<String, String> cookies) {
@@ -35,7 +27,7 @@ public class PurchasePage {
         for (Map.Entry<String, String> entry : cookies.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            getWebDriver().manage().addCookie(new Cookie(key,value));
+            getWebDriver().manage().addCookie(new Cookie(key, value));
         }
         open("/emarket/purchase/?");
 
@@ -50,6 +42,6 @@ public class PurchasePage {
         inputStreet.shouldBe(visible);
         inputBuilding.shouldBe(visible);
         inputApartment.shouldBe(visible);
-        tareaOrderComment.shouldBe(visible);
+        tAreaOrderComment.shouldBe(visible);
     }
 }

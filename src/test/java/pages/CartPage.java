@@ -23,7 +23,7 @@ public class CartPage {
         for (Map.Entry<String, String> entry : cookies.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            getWebDriver().manage().addCookie(new Cookie(key,value));
+            getWebDriver().manage().addCookie(new Cookie(key, value));
         }
         open("/emarket/cart/");
 

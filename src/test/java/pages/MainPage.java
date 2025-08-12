@@ -23,7 +23,7 @@ public class MainPage {
     }
 
     @Step("Авторизоваться пользователем")
-    public MainPage login(AuthDataModel loginInfo){
+    public MainPage login(AuthDataModel loginInfo) {
         inputLogin.setValue(loginInfo.getAuthFormData().get("login"));
         inputPassword.setValue(loginInfo.getAuthFormData().get("password"));
         buttonSubmit.click();
@@ -31,10 +31,9 @@ public class MainPage {
     }
 
     @Step("Проверить успешность авторизации")
-    public void checkLogin(){
+    public void checkLogin() {
         formLogin.shouldHave(text("Добро пожаловать"));
     }
-
 
 
     @Step("Поиск товара")
