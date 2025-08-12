@@ -29,10 +29,9 @@ public class UIBaseTest {
         Configuration.pageLoadStrategy = "eager";
 
         Configuration.browser = config.getBrowserName();
-        Configuration.browserVersion = config.getBrowserVersion();
-        //Configuration.browserSize = config.getBrowserSize();
+        //Configuration.browserVersion = config.getBrowserVersion();
+        Configuration.browserSize = config.getBrowserSize();
         Configuration.remote = config.getServerAddress();
-        System.out.println(config.getServerAddress());
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(

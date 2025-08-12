@@ -19,12 +19,9 @@ public class UITests extends UIBaseTest {
     LoginAPISteps apiClient = new LoginAPISteps();
     CartAPISteps apiCart = new CartAPISteps();
 
-    //UI Tests
     @Test
     @Tag("UITests")
     public void loginWithCorrectCredentialsMustGreetUserTest() {
-
-        MainPage mainPage = new MainPage();
 
         mainPage.openMainPage()
                 .login(getAuthInfo())

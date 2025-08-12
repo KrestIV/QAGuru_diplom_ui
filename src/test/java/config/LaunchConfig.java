@@ -10,13 +10,10 @@ public interface LaunchConfig extends Config {
     @Key("browser.name")
     String getBrowserName();
 
-    @Key("browser.version")
-    String getBrowserVersion();
-
     @Key("browser.size")
     String getBrowserSize();
 
-    @Key("server.address")
+    @Key("server")
     String getServerAddress();
 
     @Key("login")
