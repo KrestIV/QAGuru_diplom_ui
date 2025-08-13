@@ -23,9 +23,9 @@ public class MainPage {
     }
 
     @Step("Авторизоваться пользователем")
-    public MainPage login(AuthDataModel loginInfo) {
-        inputLogin.setValue(loginInfo.getAuthFormData().get("login"));
-        inputPassword.setValue(loginInfo.getAuthFormData().get("password"));
+    public MainPage login(AuthDataModel authDataContainer) {
+        inputLogin.setValue(authDataContainer.getAuthData().get("login"));
+        inputPassword.setValue(authDataContainer.getAuthData().get("password"));
         buttonSubmit.click();
         return this;
     }

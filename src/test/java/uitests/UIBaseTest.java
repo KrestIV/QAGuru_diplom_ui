@@ -66,7 +66,7 @@ public class UIBaseTest {
         authData.put("from_page", "/");
 
         AuthDataModel authFormData = new AuthDataModel();
-        authFormData.setAuthFormData(authData);
+        authFormData.setAuthData(authData);
 
         return authFormData;
     }

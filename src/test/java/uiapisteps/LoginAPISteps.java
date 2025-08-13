@@ -18,9 +18,9 @@ public class LoginAPISteps {
     private Response response;
 
     @Step("Авторизовать пользователя")
-    public LoginAPISteps receiveCookies(AuthDataModel authFormData) {
+    public LoginAPISteps receiveCookies(AuthDataModel authDataContainer) {
         response = given(requestWithFormContentSpec)
-                .formParams(authFormData.getAuthFormData())
+                .formParams(authDataContainer.getAuthData())
                 .when()
                 .post("/users/login_do/");
 
