@@ -23,8 +23,8 @@ public class UIBaseTest {
     static void beforeAll() {
         LaunchConfig config = ConfigFactory.create(LaunchConfig.class, System.getProperties());
 
-        Configuration.baseUrl = "http://kakadu39.ru";
-        RestAssured.baseURI = "http://kakadu39.ru";
+        Configuration.baseUrl = config.getBaseUrl();
+        RestAssured.baseURI = config.getBaseUrl();
 
         Configuration.pageLoadStrategy = "eager";
 

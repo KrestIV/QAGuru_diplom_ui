@@ -7,6 +7,9 @@ import org.aeonbits.owner.Config;
         "system:properties"
 })
 public interface LaunchConfig extends Config {
+    @Key("url.base")
+    String getBaseUrl();
+
     @Key("browser.name")
     String getBrowserName();
 
