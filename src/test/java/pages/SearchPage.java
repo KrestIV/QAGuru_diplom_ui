@@ -1,19 +1,19 @@
 package pages;
 
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.ElementsCollection;
 import io.qameta.allure.Step;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SearchPage {
 
-    private final SelenideElement areaSearchResult = $("div.grey_border_block_center");
+    private final ElementsCollection areaSearchResultLines = $("div.grey_border_block_center").$$("p");
 
     @Step("Проверить результаты успешного поиска")
     public SearchPage successfulSearchResultsCheck() {
 
-        areaSearchResult.shouldHave(text("страниц"));
+        assertThat(areaSearchResultLines.stream().count()).isGreaterThan(2L);
 
         return this;
     }

@@ -7,7 +7,6 @@ import pages.*;
 import uiapisteps.CartAPISteps;
 import uiapisteps.LoginAPISteps;
 
-//@Tag("UITests")
 @Tag("FullTest")
 public class UITests extends UIBaseTest {
 
