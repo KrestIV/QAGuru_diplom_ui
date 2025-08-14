@@ -1,7 +1,10 @@
 package models;
 
+import lombok.AllArgsConstructor;
+
 import java.util.Map;
 
+@AllArgsConstructor
 public class AuthDataModel {
     private Map<String, String> authData;
 

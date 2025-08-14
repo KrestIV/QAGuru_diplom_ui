@@ -5,6 +5,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import config.LaunchConfig;
 import helpers.Attach;
+import helpers.AuthDataStorage;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.restassured.RestAssured;
 import models.AuthDataModel;
@@ -14,7 +15,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class UIBaseTest {
@@ -29,6 +29,7 @@ public class UIBaseTest {
         Configuration.pageLoadStrategy = "eager";
 
         Configuration.browser = config.getBrowserName();
+        System.out.println(config.getBrowserName());
         //Configuration.browserVersion = config.getBrowserVersion();
         Configuration.browserSize = config.getBrowserSize();
         Configuration.remote = config.getServerAddress();
@@ -39,6 +40,16 @@ public class UIBaseTest {
                 "enableVideo", true
         ));
         Configuration.browserCapabilities = capabilities;
+
+
+        AuthDataModel authDataModel = new AuthDataModel(Map.<String, String>of(
+                "login",config.getShopLogin(),
+                "password",config.getShopPassword(),
+                "from_page","/"
+        ));
+
+        AuthDataStorage.getInstance();
+        AuthDataStorage.setAuthDataContainer(authDataModel);
     }
 
     @BeforeEach
@@ -53,21 +64,5 @@ public class UIBaseTest {
         Attach.browserConsoleLogs();
         Attach.addVideo();
         Selenide.closeWebDriver();
-    }
-
-    public AuthDataModel getAuthInfo() {
-        LaunchConfig config = ConfigFactory.create(LaunchConfig.class, System.getProperties());
-        String login = config.getShopLogin();
-        String pw = config.getShopPassword();
-
-        Map<String, String> authData = new HashMap<>();
-        authData.put("login", login);
-        authData.put("password", pw);
-        authData.put("from_page", "/");
-
-        AuthDataModel authFormData = new AuthDataModel();
-        authFormData.setAuthData(authData);
-
-        return authFormData;
     }
 }

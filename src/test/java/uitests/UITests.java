@@ -1,5 +1,6 @@
 package uitests;
 
+import helpers.AuthDataStorage;
 import helpers.CookieStorage;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -19,18 +20,17 @@ public class UITests extends UIBaseTest {
     CartAPISteps apiCart = new CartAPISteps();
 
     @Test
-    @Tag("UITests")
     public void loginWithCorrectCredentialsMustGreetUserTest() {
 
         mainPage.openMainPage()
-                .login(getAuthInfo())
+                .login(AuthDataStorage.getAuthDataContainer())
                 .checkLogin();
     }
 
     @Test
     public void addingItemToCartMustAddItemToCartTest() {
 
-        apiClient.receiveCookies(getAuthInfo());
+        apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
 
         apiCart.prepareCart();
 
@@ -43,11 +43,11 @@ public class UITests extends UIBaseTest {
     @Test
     public void addingTwoItemsToCartMustDisplayNumberOfItemsInCartTest() {
 
-        apiClient.receiveCookies(getAuthInfo());
+        apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
 
         apiCart.prepareCart()
-                .putItemToCart("3158")
-                .putItemToCart("3158");
+                .putItemToCart("3285")
+                .putItemToCart("3285");
 
         cartPage.openCartPageWithAuthorizedUser(CookieStorage.getCookies())
                 .checkFirstItemQuantity();
@@ -58,10 +58,10 @@ public class UITests extends UIBaseTest {
     @Test
     public void deletingItemFromCartMustEmptyCartTest() {
 
-        apiClient.receiveCookies(getAuthInfo());
+        apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
 
         apiCart.prepareCart()
-                .putItemToCart("3158");
+                .putItemToCart("3285");
 
         cartPage.openCartPageWithAuthorizedUser(CookieStorage.getCookies())
                 .deleteFirstItem();
@@ -72,10 +72,10 @@ public class UITests extends UIBaseTest {
     @Test
     public void clearCartMustEmptyCartTest() {
 
-        apiClient.receiveCookies(getAuthInfo());
+        apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
 
         apiCart.prepareCart()
-                .putItemToCart("3158")
+                .putItemToCart("3285")
                 .putItemToCart("721468");
 
         cartPage.openCartPageWithAuthorizedUser(CookieStorage.getCookies())
@@ -87,16 +87,17 @@ public class UITests extends UIBaseTest {
     @Test
     public void openingPurchasePageMustShowPurchaseFormTest() {
 
-        apiClient.receiveCookies(getAuthInfo());
+        apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
 
         apiCart.prepareCart()
-                .putItemToCart("3158");
+                .putItemToCart("3285");
 
         purchasePage.openPurchasePageWithAuthorizedUser(CookieStorage.getCookies())
                 .checkPurchaseForm();
     }
 
     @Test
+    @Tag("UITests")
     public void searchItemMustShowListOfItemsTest() {
 
         mainPage.openMainPage()

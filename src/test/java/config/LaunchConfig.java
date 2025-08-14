@@ -4,6 +4,7 @@ import org.aeonbits.owner.Config;
 
 @Config.Sources({
         "classpath:${platform}.config",
+        "classpath:${platform}.items.config",
         "system:properties"
 })
 public interface LaunchConfig extends Config {
@@ -24,5 +25,8 @@ public interface LaunchConfig extends Config {
 
     @Key("pw")
     String getShopPassword();
+
+    @Key("item.forcart.primary.id")
+    String getItemForcartPrimaryId();
 
 }
