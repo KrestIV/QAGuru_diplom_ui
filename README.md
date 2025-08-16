@@ -37,11 +37,13 @@
 Реализована отправка результатов в <code>Telegram</code> при помощи бота.
 
 ### Список тестов
-**fullFilledApplicationForPartnershipShouldDisplaySuccessMessageTest** - Тест отправки заявки для сотрудничества  
-**partFilledApplicationForPartnershipShouldDisplayErrorMessageTest** - Тест ошибки при неполном заполнении формы  
-**vacanciesListShouldContainRelevantItemsOrBeEmptyTest** - Тест фильтра вакансий по специальности  
-**fullFilledRequestCallbackFormShouldDisplaySuccessMessageTest** - Тест формы заказа обратного звонка  
-**contactsPageShouldContainAllLocationsTest** - Тест отображения локаций офисов
+**loginWithCorrectCredentialsMustGreetUserTest** - Проверка авторизации зарегистрированного пользователя  
+**addingItemToCartMustAddItemToCartTest** - Проверка добавления товара в корзину
+**addingTwoItemsToCartMustDisplayNumberOfItemsInCartTest** - Проверка отображения количества одного товара в корзине  
+**deletingItemFromCartMustEmptyCartTest** - Проверка удаления одного товара из корзины
+**clearCartMustEmptyCartTest** - Проверка очистки корзины
+**openingPurchasePageMustShowPurchaseFormTest** - Проверка формы оформления заказа
+**searchItemMustShowListOfItemsTest** - Проверка работы формы поиска
 
 ### Jenkins
 Настройка, запуск и переход к результатам запуска автотестов осуществляется в [Jenkins](https://jenkins.autotests.cloud/job/006-ilya_krestsov_qa_guru_javaAQA_diplom/)
@@ -54,13 +56,16 @@
 Автотесты запускаются сборкой в <code>Jenkins</code> с заполнением параметров выполнения
 
 <p>
-<img src="media/jenkinsBuildOptions.png" height="331" width="610" style="background: #FFFFFF" alt="jenkins_build_parameters">
+<img src="media/jenkinsBuildOptions.png" height="830" width="545" style="background: #FFFFFF" alt="jenkins_build_parameters">
 </p>  
 
-- **EXEC_SERVER** - Адрес сервера выполнения тестов
-- **CREDENTIALS_LOGIN** - Логин для доступа к серверу выполнения тестов
-- **CREDENTIALS_PW** - пароль для доступа к серверу выполнения тестов
-- **BROWSER, BROWSER_VERSION, BROWSER_SIZE** - Выбор браузера/версии/разрешения экрана для исполнения тестов
+- **TASK** - Параметр, определяющий набор тестов для запуска
+- **PLATFORM** - Платформа для выполнения автотестов
+- **SERVER** - Адрес сервера выполнения тестов
+- **LOGIN** - Логин для доступа к серверу выполнения тестов
+- **PASSWORD** - пароль для доступа к серверу выполнения тестов
+- **SHOP_LOGIN** - Логин тестового пользователя
+- **SHOP_PW** - Пароль тестового пользователя
 - **COMMENT** - Параметр, определяющий текст сообщения в боте уведомлений
 
 ### Allure-отчеты
@@ -69,12 +74,12 @@ Allure-отчет содержит в себе результаты выполн
 - Скриншот финала теста
 - код страницы
 - журнал консоли браузера при выполнении теста
-- [видео-запись выполнения теста](https://selenoid.autotests.cloud/video/f6f6c0e7f7576427a76354f107f99edd.mp4)
+- [видео-запись выполнения теста](https://selenoid.autotests.cloud/video/739280c4c19bcec0ce9a6d9a713ef633.mp4)
 
-[Пример полного allure-отчета](https://jenkins.autotests.cloud/job/CenticoreJobApplication/allure/)
+[Пример полного allure-отчета](https://jenkins.autotests.cloud/job/006-ilya_krestsov_qa_guru_javaAQA_diplom/allure/)
 
 <p>
-<img src="media/allureReportExample.png" height="296" width="884" style="background: #FFFFFF" alt="allure_report">
+<img src="media/allureReportExample.png" height="645" width="851" style="background: #FFFFFF" alt="allure_report">
 </p>
 
 ### Уведомления в телеграм
