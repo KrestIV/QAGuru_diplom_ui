@@ -44,7 +44,7 @@
 **contactsPageShouldContainAllLocationsTest** - Тест отображения локаций офисов
 
 ### Jenkins
-Настройка, запуск и переход к результатам запуска автотестов осуществляется в [Jenkins](https://jenkins.autotests.cloud/job/CenticoreJobApplication/)
+Настройка, запуск и переход к результатам запуска автотестов осуществляется в [Jenkins](https://jenkins.autotests.cloud/job/006-ilya_krestsov_qa_guru_javaAQA_diplom/)
 
 <p>
 <img src="media/JenkinsJobMainScreen.png" style="background: #FFFFFF" alt="Jenkins_job">
