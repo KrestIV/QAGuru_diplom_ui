@@ -1,5 +1,6 @@
 # <p style="text-align:center">Дипломный проект </p>
 ## <p style="text-align:center">UI-часть на примере сайта интернет магазина товаров для животных [Kakadu](http://kakadu39.ru/)</p>
+### <p style="text-align:center">С API-частью можно ознакомиться по [ссылке](https://github.com/KrestIV/QAGuru_diplom_api)</p>
 
 <p style="text-align:center">
 <img src="media/kakadu.png" height="201" width="157" style="background: #FFFFFF" alt="centicore_logo">
@@ -20,6 +21,7 @@
 <a href="https://www.java.com/ru/"><img width="8%" title="Java" src="media/java-original.svg" alt="java_logo"></a>
 <a href="https://www.jetbrains.com/idea/"><img width="8%" title="IntelliJ IDEA" src="media/intellij-original.svg" alt="intelliJIDEA_logo"></a>
 <a href="https://selenide.org/"><img width="8%" title="Selenide" src="media/Selenide.svg" alt="selenide_logo"></a>
+<a href="https://rest-assured.io/"><img width="8%" title="REST-assured" src="media/rest_assured.png" alt="REST-assured_logo"></a>
 <a href="https://aerokube.com/selenoid/"><img width="8%" title="Selenoid" src="media/Selenoid.svg" alt="selenoid_logo"></a>
 <a href="https://allurereport.org/"><img width="8%" title="Allure Report" src="media/Allure_Report.svg" alt="allure_logo"></a>
 <a href="https://gradle.org/"><img width="8%" title="Gradle" src="media/Gradle.svg" alt="gradle_logo"></a>
@@ -29,7 +31,8 @@
 <a href="https://telegram.org/"><img width="8%" title="Telegram" src="media/Telegram.svg" alt="telegram_logo"></a>
 </p>  
 
-Автотесты в проекте написаны на <code>Java</code> с использованием фреймворка [Selenide](https://selenide.org/),  
+Автотесты в проекте написаны на <code>Java</code> с использованием фреймворка [Selenide](https://selenide.org/)
+и библиотеки [REST-assured](https://rest-assured.io/),  
 сборщик - <code>Gradle</code>,  
 фреймворк модульного тестирования - <code>JUnit 5</code>,  
 удаленный запуск браузера и прохождение сценариев - [Selenoid](https://aerokube.com/selenoid/),  
