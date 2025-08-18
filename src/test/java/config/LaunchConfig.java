@@ -26,7 +26,16 @@ public interface LaunchConfig extends Config {
     @Key("pw")
     String getShopPassword();
 
-    @Key("item.forcart.primary.id")
-    String getItemForcartPrimaryId();
+    @Key("item.cart.primary.id")
+    String getItemCartPrimaryId();
+
+    @Key("item.cart.primary.description")
+    String getItemCartPrimaryDescription();
+
+    @Key("item.cart.secondary.id")
+    String getItemCartSecondaryId();
+
+    @Key("search.word")
+    String getSearchWord();
 
 }

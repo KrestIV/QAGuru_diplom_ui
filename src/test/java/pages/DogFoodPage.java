@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
+import helpers.TestDataStorage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Cookie;
 
@@ -12,7 +13,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 public class DogFoodPage {
 
-    private final SelenideElement buttonAddItemToCart = $("a[href=\"/emarket/basket/put/element/3285/\"]");
+    private final SelenideElement buttonAddItemToCart = $("a[href=\"/emarket/basket/put/element/" + TestDataStorage.getItemCartPrimaryId() + "/\"]");
 
     @Step("Открыть страницу авторизованным пользователем")
     public DogFoodPage openPageWithAuthorizedUser(Map<String, String> cookies) {

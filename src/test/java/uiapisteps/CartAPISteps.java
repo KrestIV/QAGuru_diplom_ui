@@ -39,7 +39,23 @@ public class CartAPISteps {
     }
 
     @Step("Проверить содержимое корзины")
-    public CartAPISteps checkCart(String searchString) {
+    public CartAPISteps checkCartEmpty() {
+        response = given(requestNoContentSpec)
+                .cookies(CookieStorage.getCookies())
+                .when()
+                .get("/emarket/cart/");
+
+        response.then()
+                .spec(responseSpec(200));
+
+        String html = response.getBody().asString();
+        assertThat(html)
+                .contains("корзина пуста");
+        return this;
+    }
+
+    @Step("Проверить содержимое корзины")
+    public CartAPISteps checkCartItem(String searchString) {
         response = given(requestNoContentSpec)
                 .cookies(CookieStorage.getCookies())
                 .when()

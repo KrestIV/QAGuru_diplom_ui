@@ -6,6 +6,7 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import config.LaunchConfig;
 import helpers.Attach;
 import helpers.AuthDataStorage;
+import helpers.TestDataStorage;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.restassured.RestAssured;
 import models.AuthDataModel;
@@ -42,7 +43,7 @@ public class UIBaseTest {
         Configuration.browserCapabilities = capabilities;
 
 
-        AuthDataModel authDataModel = new AuthDataModel(Map.<String, String>of(
+        AuthDataModel authDataModel = new AuthDataModel(Map.of(
                 "login",config.getShopLogin(),
                 "password",config.getShopPassword(),
                 "from_page","/"
@@ -50,6 +51,12 @@ public class UIBaseTest {
 
         AuthDataStorage.getInstance();
         AuthDataStorage.setAuthDataContainer(authDataModel);
+
+        TestDataStorage.getInstance();
+        TestDataStorage.setItemCartPrimaryId(config.getItemCartPrimaryId());
+        TestDataStorage.setItemCartPrimaryDescription(config.getItemCartPrimaryDescription());
+        TestDataStorage.setItemCartSecondaryId(config.getItemCartSecondaryId());
+        TestDataStorage.setSearchWord(config.getSearchWord());
     }
 
     @BeforeEach

@@ -2,6 +2,7 @@ package uitests;
 
 import helpers.AuthDataStorage;
 import helpers.CookieStorage;
+import helpers.TestDataStorage;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.*;
@@ -37,7 +38,7 @@ public class UITests extends UIBaseTest {
         dogFoodPage.openPageWithAuthorizedUser(CookieStorage.getCookies())
                 .addItemToCart();
 
-        apiCart.checkCart("Brit Fresh Chicken");
+        apiCart.checkCartItem(TestDataStorage.getItemCartPrimaryDescription());
     }
 
     @Test
@@ -46,8 +47,8 @@ public class UITests extends UIBaseTest {
         apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
 
         apiCart.prepareCart()
-                .putItemToCart("3285")
-                .putItemToCart("3285");
+                .putItemToCart(TestDataStorage.getItemCartPrimaryId())
+                .putItemToCart(TestDataStorage.getItemCartPrimaryId());
 
         cartPage.openCartPageWithAuthorizedUser(CookieStorage.getCookies())
                 .checkFirstItemQuantity();
@@ -61,12 +62,12 @@ public class UITests extends UIBaseTest {
         apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
 
         apiCart.prepareCart()
-                .putItemToCart("3285");
+                .putItemToCart(TestDataStorage.getItemCartPrimaryId());
 
         cartPage.openCartPageWithAuthorizedUser(CookieStorage.getCookies())
                 .deleteFirstItem();
 
-        apiCart.checkCart("Корзина пуста");
+        apiCart.checkCartEmpty();
     }
 
     @Test
@@ -75,13 +76,13 @@ public class UITests extends UIBaseTest {
         apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
 
         apiCart.prepareCart()
-                .putItemToCart("3285")
-                .putItemToCart("721468");
+                .putItemToCart(TestDataStorage.getItemCartPrimaryId())
+                .putItemToCart(TestDataStorage.getItemCartSecondaryId());
 
         cartPage.openCartPageWithAuthorizedUser(CookieStorage.getCookies())
                 .clearCart();
 
-        apiCart.checkCart("Корзина пуста");
+        apiCart.checkCartEmpty();
     }
 
     @Test
@@ -90,7 +91,7 @@ public class UITests extends UIBaseTest {
         apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
 
         apiCart.prepareCart()
-                .putItemToCart("3285");
+                .putItemToCart(TestDataStorage.getItemCartPrimaryId());
 
         purchasePage.openPurchasePageWithAuthorizedUser(CookieStorage.getCookies())
                 .checkPurchaseForm();
@@ -101,7 +102,7 @@ public class UITests extends UIBaseTest {
     public void searchItemMustShowListOfItemsTest() {
 
         mainPage.openMainPage()
-                .search("фитомины");
+                .search(TestDataStorage.getSearchWord());
         searchPage.successfulSearchResultsCheck();
     }
 }
