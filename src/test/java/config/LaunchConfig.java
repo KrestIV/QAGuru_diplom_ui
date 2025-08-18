@@ -4,7 +4,7 @@ import org.aeonbits.owner.Config;
 
 @Config.Sources({
         "classpath:${platform}.config",
-        "classpath:items.${platform}.config",
+        "classpath:${testItems}.config",
         "system:properties"
 })
 public interface LaunchConfig extends Config {
