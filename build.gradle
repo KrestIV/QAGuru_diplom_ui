@@ -66,14 +66,14 @@ tasks.withType(Test) {
     }
 }
 
-task ui_test(type: Test) {
-    useJUnitPlatform {
-        includeTags("UITests")
-    }
-}
-
 task full_test(type: Test) {
     useJUnitPlatform {
         includeTags("FullTest")
+    }
+}
+
+task cart_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("CartTests")
     }
 }

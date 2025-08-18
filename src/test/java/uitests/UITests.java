@@ -29,6 +29,7 @@ public class UITests extends UIBaseTest {
     }
 
     @Test
+    @Tag("CartTests")
     public void addingItemToCartMustAddItemToCartTest() {
 
         apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
@@ -42,6 +43,7 @@ public class UITests extends UIBaseTest {
     }
 
     @Test
+    @Tag("CartTests")
     public void addingTwoItemsToCartMustDisplayNumberOfItemsInCartTest() {
 
         apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
@@ -57,6 +59,7 @@ public class UITests extends UIBaseTest {
     }
 
     @Test
+    @Tag("CartTests")
     public void deletingItemFromCartMustEmptyCartTest() {
 
         apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
@@ -71,6 +74,7 @@ public class UITests extends UIBaseTest {
     }
 
     @Test
+    @Tag("CartTests")
     public void clearCartMustEmptyCartTest() {
 
         apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
@@ -98,7 +102,6 @@ public class UITests extends UIBaseTest {
     }
 
     @Test
-    @Tag("UITests")
     public void searchItemMustShowListOfItemsTest() {
 
         mainPage.openMainPage()
