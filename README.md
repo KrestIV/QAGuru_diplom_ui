@@ -59,11 +59,12 @@
 Автотесты запускаются сборкой в <code>Jenkins</code> с заполнением параметров выполнения
 
 <p>
-<img src="media/jenkinsBuildOptions.png" height="830" width="545" style="background: #FFFFFF" alt="jenkins_build_parameters">
+<img src="media/jenkinsBuildOptions.png" style="background: #FFFFFF" alt="jenkins_build_parameters">
 </p>  
 
 - **TASK** - Параметр, определяющий набор тестов для запуска
-- **PLATFORM** - Платформа для выполнения автотестов
+- **TEST_ITEMS** - Параметр, определяющий набор тестовых данных, используемых при выполнении тестов
+- **PLATFORM** - Платформа для выполнения тестов
 - **SERVER** - Адрес сервера выполнения тестов
 - **LOGIN** - Логин для доступа к серверу выполнения тестов
 - **PASSWORD** - пароль для доступа к серверу выполнения тестов

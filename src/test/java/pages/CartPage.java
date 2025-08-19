@@ -47,9 +47,9 @@ public class CartPage {
     }
 
     @Step("Проверить количество добавленного в корзину товара")
-    public CartPage checkFirstItemQuantity() {
+    public CartPage checkFirstItemQuantity(Integer quantity) {
 
-        orderTableFirstRow.$$("td").findBy(text("2")).shouldBe();
+        orderTableFirstRow.$$("td").get(1).shouldHave(text(quantity.toString()));
 
         return this;
     }

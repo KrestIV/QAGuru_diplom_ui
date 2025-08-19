@@ -31,7 +31,7 @@ public class UIBaseTest {
 
         Configuration.browser = config.getBrowserName();
         System.out.println(config.getBrowserName());
-        //Configuration.browserVersion = config.getBrowserVersion();
+        Configuration.browserVersion = config.getBrowserVersion();
         Configuration.browserSize = config.getBrowserSize();
         Configuration.remote = config.getServerAddress();
 
@@ -44,9 +44,9 @@ public class UIBaseTest {
 
 
         AuthDataModel authDataModel = new AuthDataModel(Map.of(
-                "login",config.getShopLogin(),
-                "password",config.getShopPassword(),
-                "from_page","/"
+                "login", config.getShopLogin(),
+                "password", config.getShopPassword(),
+                "from_page", "/"
         ));
 
         AuthDataStorage.getInstance();

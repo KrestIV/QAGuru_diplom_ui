@@ -45,15 +45,15 @@ public class UITests extends UIBaseTest {
     @Test
     @Tag("CartTests")
     public void addingTwoItemsToCartMustDisplayNumberOfItemsInCartTest() {
+        int quantity = (int) (Math.random() * 2) + 2;
 
         apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
 
         apiCart.prepareCart()
-                .putItemToCart(TestDataStorage.getItemCartPrimaryId())
-                .putItemToCart(TestDataStorage.getItemCartPrimaryId());
+                .putItemToCart(TestDataStorage.getItemCartPrimaryId(), quantity);
 
         cartPage.openCartPageWithAuthorizedUser(CookieStorage.getCookies())
-                .checkFirstItemQuantity();
+                .checkFirstItemQuantity(quantity);
 
         apiCart.prepareCart();
     }

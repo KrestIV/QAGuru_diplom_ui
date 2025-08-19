@@ -26,6 +26,13 @@ public class CartAPISteps {
     }
 
     @Step("Добавить товар в корзину")
+    public CartAPISteps putItemToCart(String item, int quantity) {
+        for (int i = 0; i < quantity; i++) putItemToCart(item);
+
+        return this;
+    }
+
+    @Step("Добавить товар в корзину")
     public CartAPISteps putItemToCart(String item) {
         response = given(requestNoContentSpec)
                 .cookies(CookieStorage.getCookies())
