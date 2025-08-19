@@ -6,8 +6,7 @@ import helpers.TestDataStorage;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.*;
-import uiapisteps.CartAPISteps;
-import uiapisteps.LoginAPISteps;
+import uiapisteps.CommonAPISteps;
 
 @Tag("FullTest")
 public class UITests extends UIBaseTest {
@@ -17,13 +16,13 @@ public class UITests extends UIBaseTest {
     PurchasePage purchasePage = new PurchasePage();
     CartPage cartPage = new CartPage();
     DogFoodPage dogFoodPage = new DogFoodPage();
-    LoginAPISteps apiClient = new LoginAPISteps();
-    CartAPISteps apiCart = new CartAPISteps();
+    CommonAPISteps commonAPISteps = new CommonAPISteps();
 
     @Test
     public void loginWithCorrectCredentialsMustGreetUserTest() {
 
-        mainPage.openMainPage()
+        mainPage
+                .openMainPage()
                 .login(AuthDataStorage.getAuthDataContainer())
                 .checkLogin();
     }
@@ -32,14 +31,16 @@ public class UITests extends UIBaseTest {
     @Tag("CartTests")
     public void addingItemToCartMustAddItemToCartTest() {
 
-        apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
+        commonAPISteps
+                .receiveCookies(AuthDataStorage.getAuthDataContainer())
+                .prepareCart();
 
-        apiCart.prepareCart();
-
-        dogFoodPage.openPageWithAuthorizedUser(CookieStorage.getCookies())
+        dogFoodPage
+                .openPageWithAuthorizedUser(CookieStorage.getCookies())
                 .addItemToCart();
 
-        apiCart.checkCartItem(TestDataStorage.getItemCartPrimaryDescription());
+        commonAPISteps
+                .checkCartItem(TestDataStorage.getItemCartPrimaryDescription());
     }
 
     @Test
@@ -47,65 +48,75 @@ public class UITests extends UIBaseTest {
     public void addingTwoItemsToCartMustDisplayNumberOfItemsInCartTest() {
         int quantity = (int) (Math.random() * 3) + 2;
 
-        apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
-
-        apiCart.prepareCart()
+        commonAPISteps
+                .receiveCookies(AuthDataStorage.getAuthDataContainer())
+                .prepareCart()
                 .putItemToCart(TestDataStorage.getItemCartPrimaryId(), quantity);
 
-        cartPage.openCartPageWithAuthorizedUser(CookieStorage.getCookies())
+        cartPage
+                .openCartPageWithAuthorizedUser(CookieStorage.getCookies())
                 .checkFirstItemQuantity(quantity);
 
-        apiCart.prepareCart();
+        commonAPISteps
+                .prepareCart();
     }
 
     @Test
     @Tag("CartTests")
     public void deletingItemFromCartMustEmptyCartTest() {
 
-        apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
-
-        apiCart.prepareCart()
+        commonAPISteps
+                .receiveCookies(AuthDataStorage.getAuthDataContainer())
+                .prepareCart()
                 .putItemToCart(TestDataStorage.getItemCartPrimaryId());
 
-        cartPage.openCartPageWithAuthorizedUser(CookieStorage.getCookies())
+        cartPage
+                .openCartPageWithAuthorizedUser(CookieStorage.getCookies())
                 .deleteFirstItem();
 
-        apiCart.checkCartEmpty();
+        commonAPISteps
+                .checkCartEmpty();
     }
 
     @Test
     @Tag("CartTests")
     public void clearCartMustEmptyCartTest() {
 
-        apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
-
-        apiCart.prepareCart()
+        commonAPISteps
+                .receiveCookies(AuthDataStorage.getAuthDataContainer())
+                .prepareCart()
                 .putItemToCart(TestDataStorage.getItemCartPrimaryId())
                 .putItemToCart(TestDataStorage.getItemCartSecondaryId());
 
-        cartPage.openCartPageWithAuthorizedUser(CookieStorage.getCookies())
+        cartPage
+                .openCartPageWithAuthorizedUser(CookieStorage.getCookies())
                 .clearCart();
 
-        apiCart.checkCartEmpty();
+        commonAPISteps
+                .checkCartEmpty();
     }
 
     @Test
     public void openingPurchasePageMustShowPurchaseFormTest() {
 
-        apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
-
-        apiCart.prepareCart()
+        commonAPISteps
+                .receiveCookies(AuthDataStorage.getAuthDataContainer())
+                .prepareCart()
                 .putItemToCart(TestDataStorage.getItemCartPrimaryId());
 
-        purchasePage.openPurchasePageWithAuthorizedUser(CookieStorage.getCookies())
+        purchasePage
+                .openPurchasePageWithAuthorizedUser(CookieStorage.getCookies())
                 .checkPurchaseForm();
     }
 
     @Test
     public void searchItemMustShowListOfItemsTest() {
 
-        mainPage.openMainPage()
+        mainPage
+                .openMainPage()
                 .search(TestDataStorage.getSearchWord());
-        searchPage.successfulSearchResultsCheck();
+
+        searchPage
+                .successfulSearchResultsCheck();
     }
 }
