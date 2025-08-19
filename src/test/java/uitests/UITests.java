@@ -45,7 +45,7 @@ public class UITests extends UIBaseTest {
     @Test
     @Tag("CartTests")
     public void addingTwoItemsToCartMustDisplayNumberOfItemsInCartTest() {
-        int quantity = (int) (Math.random() * 2) + 2;
+        int quantity = (int) (Math.random() * 3) + 2;
 
         apiClient.receiveCookies(AuthDataStorage.getAuthDataContainer());
 
