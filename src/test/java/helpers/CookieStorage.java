@@ -12,6 +12,10 @@ public class CookieStorage {
     @Setter
     private static Map<String, String> cookies;
 
+    @Getter
+    @Setter
+    private static String urlPicture;
+
     public static synchronized CookieStorage getInstance() {
         if (instance == null) {
             instance = new CookieStorage();

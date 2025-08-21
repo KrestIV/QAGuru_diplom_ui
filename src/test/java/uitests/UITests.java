@@ -1,7 +1,6 @@
 package uitests;
 
 import helpers.AuthDataStorage;
-import helpers.CookieStorage;
 import helpers.TestDataStorage;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -36,7 +35,7 @@ public class UITests extends UIBaseTest {
                 .prepareCart();
 
         dogFoodPage
-                .openPageWithAuthorizedUser(CookieStorage.getCookies())
+                .openPageWithAuthorizedUser()
                 .addItemToCart();
 
         commonAPISteps
@@ -54,7 +53,7 @@ public class UITests extends UIBaseTest {
                 .putItemToCart(TestDataStorage.getItemCartPrimaryId(), quantity);
 
         cartPage
-                .openCartPageWithAuthorizedUser(CookieStorage.getCookies())
+                .openCartPageWithAuthorizedUser()
                 .checkFirstItemQuantity(quantity);
 
         commonAPISteps
@@ -71,7 +70,7 @@ public class UITests extends UIBaseTest {
                 .putItemToCart(TestDataStorage.getItemCartPrimaryId());
 
         cartPage
-                .openCartPageWithAuthorizedUser(CookieStorage.getCookies())
+                .openCartPageWithAuthorizedUser()
                 .deleteFirstItem();
 
         commonAPISteps
@@ -89,7 +88,7 @@ public class UITests extends UIBaseTest {
                 .putItemToCart(TestDataStorage.getItemCartSecondaryId());
 
         cartPage
-                .openCartPageWithAuthorizedUser(CookieStorage.getCookies())
+                .openCartPageWithAuthorizedUser()
                 .clearCart();
 
         commonAPISteps
@@ -105,7 +104,7 @@ public class UITests extends UIBaseTest {
                 .putItemToCart(TestDataStorage.getItemCartPrimaryId());
 
         purchasePage
-                .openPurchasePageWithAuthorizedUser(CookieStorage.getCookies())
+                .openPurchasePageWithAuthorizedUser()
                 .checkPurchaseForm();
     }
 

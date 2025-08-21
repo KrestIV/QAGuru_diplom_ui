@@ -1,5 +1,7 @@
 # <p style="text-align:center">Дипломный проект </p>
+
 ## <p style="text-align:center">UI-часть на примере сайта интернет магазина товаров для животных [Kakadu](http://kakadu39.ru/)</p>
+
 ### <p style="text-align:center">С API-частью можно ознакомиться по [ссылке](https://github.com/KrestIV/QAGuru_diplom_api)</p>
 
 <p style="text-align:center">
@@ -7,6 +9,7 @@
 </p>
 
 # Содержание
+
 - [Стек технологий](#стек-технологий)
 - [Список тестов](#список-тестов)
 - [Jenkins](#jenkins)
@@ -15,8 +18,8 @@
 - [Уведомления в телеграм](#уведомления-в-телеграм)
 - [Пример запуска автотестов](#примеры-запуска-автотестов)
 
-
 ## Стек технологий
+
 <p style="background:#ffffff;text-align:center">
 <a href="https://www.java.com/ru/"><img width="8%" title="Java" src="media/java-original.svg" alt="java_logo"></a>
 <a href="https://www.jetbrains.com/idea/"><img width="8%" title="IntelliJ IDEA" src="media/intellij-original.svg" alt="intelliJIDEA_logo"></a>
@@ -40,6 +43,7 @@
 Реализована отправка результатов в <code>Telegram</code> при помощи бота.
 
 ### Список тестов
+
 **loginWithCorrectCredentialsMustGreetUserTest** - Проверка авторизации зарегистрированного пользователя  
 **addingItemToCartMustAddItemToCartTest** - Проверка добавления товара в корзину
 **addingTwoItemsToCartMustDisplayNumberOfItemsInCartTest** - Проверка отображения количества одного товара в корзине  
@@ -49,13 +53,16 @@
 **searchItemMustShowListOfItemsTest** - Проверка работы формы поиска
 
 ### Jenkins
-Настройка, запуск и переход к результатам запуска автотестов осуществляется в [Jenkins](https://jenkins.autotests.cloud/job/006-ilya_krestsov_qa_guru_javaAQA_diplom/)
+
+Настройка, запуск и переход к результатам запуска автотестов осуществляется
+в [Jenkins](https://jenkins.autotests.cloud/job/006-ilya_krestsov_qa_guru_javaAQA_diplom/)
 
 <p>
 <img src="media/JenkinsJobMainScreen.png" style="background: #FFFFFF" alt="Jenkins_job">
 </p>
 
 ### Запуск автотестов
+
 Автотесты запускаются сборкой в <code>Jenkins</code> с заполнением параметров выполнения
 
 <p>
@@ -75,6 +82,7 @@
 ### Allure-отчеты
 
 Allure-отчет содержит в себе результаты выполнения всех тестов с дополнительной информацией:
+
 - Скриншот финала теста
 - код страницы
 - журнал консоли браузера при выполнении теста

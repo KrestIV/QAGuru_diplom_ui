@@ -12,7 +12,6 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static specs.RequestSpec.*;
-import static specs.RequestSpec.requestNoContentSpec;
 
 public class CommonAPISteps {
     private Response response;

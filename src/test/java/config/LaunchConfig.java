@@ -12,6 +12,9 @@ public interface LaunchConfig extends Config {
     @Key("url.base")
     String getBaseUrl();
 
+    @Key("url.picture")
+    String getUrlPicture();
+
     @Key("browser.name")
     String getBrowserName();
 
