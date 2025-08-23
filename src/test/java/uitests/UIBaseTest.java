@@ -31,7 +31,6 @@ public class UIBaseTest {
         Configuration.pageLoadStrategy = "eager";
 
         Configuration.browser = config.getBrowserName();
-        System.out.println(config.getBrowserName());
         Configuration.browserVersion = config.getBrowserVersion();
         Configuration.browserSize = config.getBrowserSize();
         Configuration.remote = config.getServerAddress();
@@ -50,16 +49,13 @@ public class UIBaseTest {
                 "from_page", "/"
         ));
 
-        AuthDataStorage.getInstance();
         AuthDataStorage.setAuthDataContainer(authDataModel);
 
-        TestDataStorage.getInstance();
         TestDataStorage.setItemCartPrimaryId(config.getItemCartPrimaryId());
         TestDataStorage.setItemCartPrimaryDescription(config.getItemCartPrimaryDescription());
         TestDataStorage.setItemCartSecondaryId(config.getItemCartSecondaryId());
         TestDataStorage.setSearchWord(config.getSearchWord());
 
-        CookieStorage.getInstance();
         CookieStorage.setUrlPicture(config.getUrlPicture());
     }
 

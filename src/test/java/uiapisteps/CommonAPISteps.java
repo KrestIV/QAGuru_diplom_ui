@@ -26,7 +26,6 @@ public class CommonAPISteps {
         response.then()
                 .spec(responseSpec(301));
 
-        CookieStorage.getInstance();
         CookieStorage.setCookies(getCookies());
 
         return this;

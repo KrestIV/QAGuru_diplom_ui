@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'io.qameta.allure' version '2.10.0'
-    id "io.freefair.lombok" version "6.0.0-m2"
+    id 'io.freefair.lombok' version '8.13.1'
 }
 
 compileJava {
@@ -18,7 +18,7 @@ def selenideVersion = "7.8.1",
     junitVersion = "5.13.4",
     assertjVersion = "3.27.4",
     slf4jVersion = "2.0.17",
-    javafakerVersioin = "1.0.2"
+    javafakerVersion = "1.0.2"
 
 allure {
     report {
@@ -50,7 +50,7 @@ dependencies {
             "org.junit.jupiter:junit-jupiter:$junitVersion",
             "org.assertj:assertj-core:$assertjVersion",
             "org.slf4j:slf4j-simple:$slf4jVersion",
-            "com.github.javafaker:javafaker:$javafakerVersioin"
+            "com.github.javafaker:javafaker:$javafakerVersion"
     )
 }
 
