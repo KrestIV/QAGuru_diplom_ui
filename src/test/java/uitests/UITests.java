@@ -1,7 +1,7 @@
 package uitests;
 
-import helpers.AuthDataStorage;
-import helpers.TestDataStorage;
+import storages.AuthDataStorage;
+import storages.TestDataStorage;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.*;

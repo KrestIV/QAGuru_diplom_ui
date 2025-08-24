@@ -1,6 +1,6 @@
 package uiapisteps;
 
-import helpers.CookieStorage;
+import storages.CookieStorage;
 import io.qameta.allure.Step;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;

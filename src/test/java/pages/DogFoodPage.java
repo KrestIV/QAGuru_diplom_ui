@@ -1,7 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
-import helpers.TestDataStorage;
+import storages.TestDataStorage;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$;

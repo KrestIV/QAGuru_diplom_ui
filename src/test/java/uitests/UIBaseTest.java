@@ -5,9 +5,9 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import config.LaunchConfig;
 import helpers.Attach;
-import helpers.AuthDataStorage;
-import helpers.CookieStorage;
-import helpers.TestDataStorage;
+import storages.AuthDataStorage;
+import storages.OpenPicUrlStorage;
+import storages.TestDataStorage;
 import io.qameta.allure.selenide.AllureSelenide;
 import io.restassured.RestAssured;
 import models.AuthDataModel;
@@ -56,7 +56,7 @@ public class UIBaseTest {
         TestDataStorage.setItemCartSecondaryId(config.getItemCartSecondaryId());
         TestDataStorage.setSearchWord(config.getSearchWord());
 
-        CookieStorage.setUrlPicture(config.getUrlPicture());
+        OpenPicUrlStorage.setUrlPicture(config.getUrlPicture());
     }
 
     @BeforeEach

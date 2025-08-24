@@ -1,4 +1,4 @@
-package helpers;
+package storages;
 
 import lombok.Getter;
 import lombok.Setter;
